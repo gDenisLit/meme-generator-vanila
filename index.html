@@ -7,39 +7,75 @@
     <link rel="stylesheet" href="./css/style.css" class="stylesheet">
     <title>Ultimate Meme Generator</title>
 </head>
-<body>
+<body onload="initGellery()">
     <header>
         <div class="logo">logo</div>
-        <ul class="nav">
-            <li>Gallery</li>
-            <li>About</li>
+        <ul class="nav clean-list">
+            <li><a href="./index.html">Gallery</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="./meme-editor.html">Editor</a></li>
         </ul>
     </header>
 
-    <nav>
+    <section class="choose-memes">
         <input type="text" class="search" placeholder="Search memes">
-        <ul class="tags">
-            <li>Dogs</li>
-            <li>Cats</li>
-            <li>Babies</li>
-        </ul>
-    </nav>
-
-    <main>
-        <div class="container">
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
+        <div class="key-words">
+            <ul class="clean-list">
+                <li>Key Words go here</li>
+            </ul>
         </div>
-    </main>
+        <div class="container">
+            <div class="images images-wrapper"></div>
+        </div>
+    </section>
+
+    <section class="edit-memes">
+        <div class="canvas-container">
+
+            <canvas 
+                class="meme-canvas" 
+                width="500px" 
+                height="500px"
+            ></canvas>
+
+        </div>
+
+        <div class="meme-editor">
+
+            <input type="text" class="txt edit" placeholder="Enter Text Here" oninput="onTextChange(this.value)">
+            <button class="btn txt switch">UP/DOWN</button>
+            <button class="btn txt add">txt+</button>
+            <button class="btn txt del">txt-</button>
+            <button class="btn txt size">A+</button>
+            <button class="btn txt size">A-</button>
+            <button class="btn txt align-l">Text left</button>
+            <button class="btn txt align-m">Text middle</button>
+            <button class="btn txt align-r">Text right</button>
+
+            <select name="font" id="font" class="txt font">
+                <option value="impact">Impact</option>
+                <option value="ariel">Ariel</option>
+            </select>
+
+            <input type="color" class="txt stroke-color">
+            <input type="color" class="txt fill-color">
+
+        </div>
+    </section>
 
     <footer>
         <div class="logo">logo</div>
         <span>Made By Denis Lit</span>
     </footer>
+    
+    <script src="./js/view/gallery-render.js"></script>
 
-    <script src="./js/control/main.js"></script>
+    <script src="./js/model/utility-services.js"></script>
+    <script src="./js/model/storage-services.js"></script>
+    <script src="./js/model/canvas-services.js"></script>
+    <script src="./js/model/gallery-services.js"></script>
+
+    <script src="./js/control/meme-controller.js"></script>
+    <script src="./js/control/gallery-controller.js"></script>
 </body>
 </html>

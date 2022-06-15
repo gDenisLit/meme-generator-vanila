@@ -1,7 +1,78 @@
+
+/* ------BASIC------  */
+
+/* BASE  */
+
+* {
+    margin: 0;
+}
 h1 {
-    color: pink;
+    color:pink;
+}
+body {
+    padding: 20px;
+}
+canvas {
+    outline: 3px solid;
+}
+header {
+    margin-bottom: 20px;
 }
 
-.meme-canvas {
-    border: 3px solid;
+
+/* ------LAYOUT------ */
+
+
+/* HELPERS  */
+
+.clean-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
+
+/* ------COMPONENTS------ */
+
+.item {
+    min-height: 100%;
+    min-width: 100%;
+    background-color: brown;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    cursor: pointer;
+}
+
+.container {
+    max-width: 980px;
+    height: 80vh;
+}
+
+.images-wrapper { 
+    height: 100%; 
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+
+    gap: 20px;
+    grid-auto-flow: row;
+}
+
+.tags {
+    width: 980px;
+    background-color: lightblue;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.canvas-container {
+    width: 500px;
+    height: 500px;
+    /* background-color: blue; */
+}
+
+.edit-memes{
+    display: none;
+}
+  
