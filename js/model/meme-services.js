@@ -1,9 +1,9 @@
-    'use strict'
+'use strict'
+
 const IMG_STORAGE_KEY = 'imgDB'
 const IMG_URLS_STORAGE_KEY = 'imgUrlDB'
 const MEME_STORAGE_KEY = 'memeDB'
 const KEYWORDS_STORAGE_KEY = 'keywordsDB'
-
 
 var gImages
 var gImagesUrls
@@ -16,6 +16,11 @@ function getImages() {
     return gImages
 }
 
+function getMeme(imgId) {
+    const img = gImages.find(img => img.id === imgId)
+    gMeme = _createMeme(img)
+    return gMeme
+}
 
 function getImageById(id) {
     return gImages.find(img => img.id === id)
@@ -67,6 +72,28 @@ function  _createImageUrls() {
         './img/square/img2.cats.jpg',
         './img/square/img3.dogs.jpg', 
     ]
+}
+
+function _createMeme(img) {
+    return {
+        url: img.url,
+        imgId: img.id,
+        lineIdx: 0,
+        lines: [
+            {
+                txt: 'Your Text Here',
+                size: '50px',
+                align: 'left',
+                stroke: 'black',
+                fill: 'red'
+            }
+        ]
+    }
+}
+
+function setMemeText(txt, lineIdx) {
+    gMeme.lines[lineIdx].txt = txt
+    return gMeme
 }
 
 function _loadDataFromStorage(key) {

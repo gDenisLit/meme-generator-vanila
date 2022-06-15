@@ -2,8 +2,6 @@
 
 var gCanvas
 var gCtx
-var gImg
-
 
 function initCanvas() {
     gCanvas = document.querySelector('.meme-canvas')
@@ -11,22 +9,24 @@ function initCanvas() {
     console.log('initializing canvas...')
 }
 
-function clearTexFromCanvas() {
+function clearCanvas() {
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
 }
 
-function renderImgOnCanvas(url) {
-    if (!gImg) {
-        gImg = new Image()
-        gImg.src = url
-    }
-    gCtx.drawImage(gImg, 0, 0, gCanvas.width, gCanvas.height)
-}
+function renderMeme(meme) {
+    const {url, lines, lineIdx} = meme
+    const {txt, size, align, stroke, fill} = lines[lineIdx]
 
-function renderTextOnCanvas(txt='Enter Text Here') {
-    gCtx.font = '50px Arial'
+    const img = new Image()
+    img.src = url
+    gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
+
+    gCtx.font = `${size} Ariel`
+    gCtx.textAlign = align
+
+    gCtx.strokeStyle = stroke
     gCtx.strokeText(txt, 80, 50)
-    gCtx.fillStyle = 'red'
+    gCtx.fillStyle = fill
     gCtx.fillText(txt, 80, 50)
 }
 

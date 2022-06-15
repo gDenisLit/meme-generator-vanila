@@ -42,23 +42,23 @@
 
         <div class="meme-editor">
 
-            <input type="text" class="txt edit" placeholder="Enter Text Here" oninput="onTextChange(this.value)">
-            <button class="btn txt switch">UP/DOWN</button>
-            <button class="btn txt add">txt+</button>
-            <button class="btn txt del">txt-</button>
-            <button class="btn txt size">A+</button>
-            <button class="btn txt size">A-</button>
-            <button class="btn txt align-l">Text left</button>
-            <button class="btn txt align-m">Text middle</button>
-            <button class="btn txt align-r">Text right</button>
+            <input type="text" class="txt edit" placeholder="Enter Text Here" oninput="onTextInput(this.value)">
+            <button class="btn txt switch" onclick="onSwichLines()">UP/DOWN</button>
+            <button class="btn txt add" onclick="onAddLine()">txt+</button>
+            <button class="btn txt del" onclick="onDeleteLine()">txt-</button>
+            <button class="btn txt size" value="1" onclick="onSizeChange(this.value)">A+</button>
+            <button class="btn txt size" value="-1" onclick="onSizeChange(this.value)">A-</button>
+            <button class="btn txt align-l" value="left" onclick="onAlignChange(this.value)">Text left</button>
+            <button class="btn txt align-m" value="middle" onclick="onAlignChange(this.value)">Text middle</button>
+            <button class="btn txt align-r" value="right" onclick="onAlignChange(this.value)">Text right</button>
 
-            <select name="font" id="font" class="txt font">
+            <select name="font" id="font" class="txt font" onchange="onFontChange(this.value)">
                 <option value="impact">Impact</option>
                 <option value="ariel">Ariel</option>
             </select>
 
-            <input type="color" class="txt stroke-color">
-            <input type="color" class="txt fill-color">
+            <input type="color" class="txt stroke-color" onchange="onStrokeChange(this.value)">
+            <input type="color" class="txt fill-color" onchange="onFillChange(this.value)">
 
         </div>
     </section>
@@ -73,9 +73,9 @@
     <script src="./js/model/utility-services.js"></script>
     <script src="./js/model/storage-services.js"></script>
     <script src="./js/model/canvas-services.js"></script>
-    <script src="./js/model/gallery-services.js"></script>
+    <script src="./js/model/meme-services.js"></script>
 
-    <script src="./js/control/meme-controller.js"></script>
+    <script src="./js/control/editor-controller.js"></script>
     <script src="./js/control/gallery-controller.js"></script>
 </body>
 </html>

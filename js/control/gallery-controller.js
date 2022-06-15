@@ -1,20 +1,18 @@
 'use strict'
 
-function initGellery(){
+function initGellery() {
     renderGallry()
 }
 
 function renderGallry() {
-    const images = getImages() 
-    const strHtml = getStrHtmlForImages(images) 
+    const images = getImages()
+    const strHtml = getStrHtmlForImages(images)
     document.querySelector('.images-wrapper').innerHTML = strHtml
 }
 
 function onImageSelect(imgId) {
-    const image = getImageById(imgId)
-    initEditor(image)
+    initEditor(imgId)
     document.querySelector('.choose-memes').style.display = 'none'
     document.querySelector('.edit-memes').style.display = 'block'
-
 }
 
