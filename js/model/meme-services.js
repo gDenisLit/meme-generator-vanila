@@ -79,20 +79,31 @@ function _createMeme(img) {
         url: img.url,
         imgId: img.id,
         lineIdx: 0,
-        lines: [
-            {
-                txt: 'Your Text Here',
-                size: '50px',
-                align: 'left',
-                stroke: 'black',
-                fill: 'red'
-            }
-        ]
+        isSelected: false,
+        lines: [_createMemeLine()]
     }
 }
 
 function setMemeText(txt, lineIdx) {
     gMeme.lines[lineIdx].txt = txt
+    return gMeme
+}
+
+function _createMemeLine() {
+    return {
+        txt: 'Your Text Here',
+        size: '50px',
+        align: 'left',
+        stroke: 'black',
+        fill: 'red',
+        pos: 0,
+    }
+}
+
+
+function addNewLine() {
+    const newLine = _createMemeLine()
+    gMeme.lines.push(newLine)
     return gMeme
 }
 

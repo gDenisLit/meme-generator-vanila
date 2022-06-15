@@ -1,27 +1,35 @@
 'use strict'
 
 var gCurrLine
+var gLinesCount
 
 function initEditor(imgId) {
     gCurrLine = 0
+    gLinesCount = 1
     const meme = getMeme(imgId)
 
     initCanvas()
-    renderMeme(meme)
+    renderMeme(meme, gCurrLine)
 }
 
 function onTextInput(val) {
-    const meme = setMemeText(val, gCurrLine)
+    const editedMeme = setMemeText(val, gCurrLine)
     clearCanvas()
-    renderMeme(meme)
+    renderMeme(editedMeme)
 }
 
 function onSwichLines() {
-    console.log('switching lines..')
+    if (gCurrLine === 0) gCurrLine++
+    else if (gCurrLine === gLinesCount) gCurrLine--
 }
 
 function onAddLine() {
-    console.log('adding line...')
+    if (gLinesCount < 3) gLinesCount++
+    else return
+
+    const meme = addNewLine()
+    clearCanvas()
+    renderMeme(meme)
 }
 
 function onDeleteLine() {
