@@ -17,7 +17,6 @@ function drawTextOnCanvas(lines, ctx) {
         const {imgSize, txt, txtSize, 
             align, stroke, fill, id, font} = line
         
-        console.log(align)
         ctx.font = `${txtSize}px ${font}`
         ctx.textAlign = align
         ctx.textBaseline = 'middle'

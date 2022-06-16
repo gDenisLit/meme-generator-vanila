@@ -33,11 +33,10 @@ function setCurrLine(idx) {
 }
 
 function onAddLine() {
-    if (gLinesCount < 3) gLinesCount++
-    else return
-
     const meme = addNewLine()
-    renderMeme(meme)
+    const {lines} = meme
+    gCurrLine = (lines[lines.length -1].id)
+    renderMeme(meme, gCurrLine )
 }
 
 function onDeleteLine() {
@@ -50,7 +49,6 @@ function onDeleteLine() {
 }
 
 function onSizeChange(val) {
-    console.log('changin size...', val)
     changeFontSize(val, gCurrLine)
 
     const newMeme = getMeme()
@@ -58,28 +56,24 @@ function onSizeChange(val) {
 }
 
 function onAlignChange(val) {
-    console.log('changin align...', val)
     changeTextAlign(val, gCurrLine)
     const newMeme = getMeme()
     renderMeme(newMeme, gCurrLine)
 }
 
 function onFontChange(val) {
-    console.log('changing font...', val)
     changeTextFont(val, gCurrLine)
     const newMeme = getMeme()
     renderMeme(newMeme, gCurrLine)
 }
 
 function onStrokeChange(val) {
-    console.log('changing stroke...', val)
     changeStrokeStyle(val, gCurrLine)
     const newMeme = getMeme()
     renderMeme(newMeme, gCurrLine)
 }
 
 function onFillChange(val) {
-    console.log('chaging fill...', val)
     changeFillStyle(val, gCurrLine)
     const newMeme = getMeme()
     renderMeme(newMeme, gCurrLine)

@@ -117,6 +117,7 @@ function _createMemeLines() {
 
 function addNewLine() {
     const newLine = createNewLine()
+    console.log(newLine)
     gMeme.lines.push(newLine)
     return gMeme
 }

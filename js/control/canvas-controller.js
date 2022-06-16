@@ -78,7 +78,6 @@ function onDown(ev) {
 
 function onMove(ev) {
     const box = getBoxIsDrag()
-    console.log(box)
     if (!box) return 
     else {
         
