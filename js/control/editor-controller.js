@@ -9,19 +9,33 @@ function initEditor(imgId) {
     
     initCanvas()
     const meme = getMeme(imgId)
-    renderMeme(meme)
+    renderMeme(meme, gCurrLine)
+    setTextAreaValue(meme.lines[gCurrLine].txt)
 }
 
 function onTextInput(val) {
-    const editedMeme = setMemeText(val, gCurrLine)
-    renderMeme(editedMeme)
+    const meme = setMemeText(val, gCurrLine)
+    renderMeme(meme, gCurrLine)
 }
 
 function onSwichLines() {
     if (gCurrLine === 0) gCurrLine++
     else if (gCurrLine === gLinesCount) gCurrLine--
+
+    const meme = getMeme()
+    renderMeme(meme, gCurrLine)
+    setTextAreaValue(meme.lines[gCurrLine].txt)
 }
 
+function getCurrLine() {
+    return gCurrLine
+}
+
+function setCurrLine(idx) {
+    gCurrLine = idx
+    const meme = getMeme()
+    renderMeme(meme, gCurrLine)
+}
 function onAddLine() {
     if (gLinesCount < 3) gLinesCount++
     else return
@@ -52,4 +66,8 @@ function onStrokeChange(val) {
 
 function onFillChange(val) {
     console.log('chaging fill...', val)
+}
+
+function setTextAreaValue(txt) {
+    document.querySelector('.txt-edit').value = txt
 }

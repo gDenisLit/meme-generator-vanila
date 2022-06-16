@@ -23,15 +23,16 @@ function loadGallery() {
 }
 
 function getMeme(imgId) {
-    const img = gImages.find(img => img.id === imgId)
-    gMeme = _createMeme(img)
+    if (!gMeme) {
+        const img = gImages.find(img => img.id === imgId)
+        gMeme = _createMeme(img)
+    }
     return gMeme
 }
 
 function getImageById(id) {
     return gImages.find(img => img.id === id)
 }
-
 
 function _createImages() {
     const images = []
@@ -97,9 +98,7 @@ function _createMemeLine() {
         txtSize: 50,
         align: 'center',
         stroke: 'black',
-        fill: 'white',
-        baseline: 'top'
-        
+        fill: 'white', 
     },
     {
         imgSize: {x: 500, y: 500},
@@ -108,7 +107,6 @@ function _createMemeLine() {
         align: 'center',
         stroke: 'black',
         fill: 'white',
-        baseline: 'bottom'
     }]
 }
 

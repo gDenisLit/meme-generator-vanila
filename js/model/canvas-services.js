@@ -2,7 +2,7 @@
 
 var gCanvas
 var gCtx
-
+var gStartPos
 
 function initCanvas() {
     gCanvas = document.querySelector('.meme-canvas')
@@ -15,12 +15,12 @@ function clearCanvas() {
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
 }
 
-function renderMeme(meme) {
+function renderMeme(meme, lineIdx) {
     clearCanvas()
     const {url, lines} = meme
     drawImageOnCanvas(url, gCtx)
     drawTextOnCanvas(lines, gCtx)
-    drawTextBoxOutline(lines, gCtx)
+    drawTextBoxOutline(lines, lineIdx, gCtx)
 }
 
 function _setCanvasSize() {
@@ -46,9 +46,9 @@ function addListeners() {
 }
 
 function addMouseListeners() {
-    // gCanvas.addEventListener('mousemove', onMove)
+    gCanvas.addEventListener('mousemove', onMove)
     gCanvas.addEventListener('mousedown', onDown)
-    // gCanvas.addEventListener('mouseup', onUp)
+    gCanvas.addEventListener('mouseup', onUp)
 }
 
 // function addTouchListeners() {
@@ -60,37 +60,42 @@ function addMouseListeners() {
 function onDown(ev) {
     //Get the ev pos from mouse or touch
     const pos = getEvPos(ev)
-    console.log('pos', pos)
-    // if (!isCircleClicked(pos)) return
-    // setCircleDrag(true)
-    // //Save the pos we start from 
-    // gStartPos = pos
+    const clickedBox = isBoxClicked(pos)
+    if (!clickedBox) return 
+    else {
+        setBoxDragOn(clickedBox.idx)
+        setCurrLine(clickedBox.idx)
+        gStartPos = pos
+    }
     // document.body.style.cursor = 'grabbing'
-
 }
 
+
+
 function onMove(ev) {
-    const circle = getCircle();
-    if (circle.isDrag) {
+    const box = getBoxIsDrag()
+    if (!box) return 
+    else {
         const pos = getEvPos(ev)
         //Calc the delta , the diff we moved
         const dx = pos.x - gStartPos.x
         const dy = pos.y - gStartPos.y
-        moveCircle(dx, dy)
+        moveBox(box, dx, dy)
         //Save the last pos , we remember where we`ve been and move accordingly
         gStartPos = pos
         //The canvas is render again after every move
-        renderCanvas()
+        const meme = getMeme()
+        const currLine = getCurrLine()
+        renderMeme(meme, currLine)
     }
 }
 
 function onUp() {
-    setCircleDrag(false)
-    document.body.style.cursor = 'grab'
+    setBoxDragOff()
+    // document.body.style.cursor = 'grab'
 }
 
 function getEvPos(ev) {
-    console.log('getting pos...')
     //Gets the offset pos , the default pos
     var pos = {
         x: ev.offsetX,
@@ -109,4 +114,23 @@ function getEvPos(ev) {
     //     }
     // }
     return pos
+}
+
+function isBoxClicked(clickedPos) {
+    let clickedBox
+    const boxes = getBoxes()
+    boxes.forEach((box, idx) => {
+
+        const {x, y, w, h} = box
+        const maxDisFromX = w /2
+        const maxDisFromY = h / 2
+        const distanceFromX = Math.abs(x - clickedPos.x)
+        const distanceFromY = Math.abs(y - clickedPos.y)
+    
+        if (distanceFromX < maxDisFromX && 
+            distanceFromY < maxDisFromY) {
+            clickedBox = boxes[idx]
+        }
+    })
+    return clickedBox
 }
