@@ -8,61 +8,73 @@
     <title>Ultimate Meme Generator</title>
 </head>
 <body onload="initGellery()">
-    <header>
+    <header class="main-header">
         <div class="logo">logo</div>
-        <ul class="nav clean-list">
+        <ul class="page-nav clean-list">
             <li><a href="./index.html">Gallery</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="./meme-editor.html">Editor</a></li>
         </ul>
     </header>
 
     <section class="meme-gallery">
-        <input type="text" class="search" placeholder="Search memes">
-        <div class="key-words">
-            <ul class="clean-list">
-                <li>Key Words go here</li>
-            </ul>
-        </div>
+    
+        <aside class="meme-search">
+            <input type="text" class="search" placeholder="Search">
+            <div class="key-words">
+                <div class="key-words">
+                    <!-- <canvas class="keyword-canvas"></canvas> -->
+                </div>
+            </div>
+            <button class="more">More</button>
+        </aside>
+
         <div class="container">
             <div class="images images-wrapper"></div>
         </div>
     </section>
 
     <section class="meme-editor">
-        <div class="canvas-container">
-            <canvas class="meme-canvas"></canvas>
-        </div>
-
-        <div class="editor">
-
-            <textarea class="txt-edit" oninput="onTextInput(this.value)"></textarea>
-            <button class="btn txt switch" onclick="onSwichLines()">UP/DOWN</button>
-            <button class="btn txt add" onclick="onAddLine()">Add Line</button>
-            <button class="btn txt del" onclick="onDeleteLine()">Delete Line</button>
-            <button class="btn txt size" value="1" onclick="onSizeChange(this.value)">A+</button>
-            <button class="btn txt size" value="-1" onclick="onSizeChange(this.value)">A-</button>
-            <button class="btn txt align-l" value="end" onclick="onAlignChange(this.value)">Text left</button>
-            <button class="btn txt align-m" value="center" onclick="onAlignChange(this.value)">Text middle</button>
-            <button class="btn txt align-r" value="start" onclick="onAlignChange(this.value)">Text right</button>
-
-            <select name="font" id="font" class="txt font" onchange="onFontChange(this.value)">
-                <option value="impact">Impact</option>
-                <option value="ariel">Ariel</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Courier New">Courier New</option>
-                <option value="sans-serif">sans-serif</option>
-                <option value="serif">serif</option>
-            </select>
-
-            <input type="color" class="txt stroke-color" onchange="onStrokeChange(this.value)">
-            <input type="color" class="txt fill-color" onchange="onFillChange(this.value)">
-            <a href="#" onclick="onDownLoadCanvas(this)" download="file-name">Download</a>
-
+        <div class="editor-container">
+            <div class="canvas-container">
+                <canvas class="meme-canvas"></canvas>
+            </div>
+    
+            <div class="editor">
+    
+                <textarea class="txt-edit item1" oninput="onTextInput(this.value)"></textarea>
+                <div class="item2">
+                    <button class="btn btn1" onclick="onSwichLines()">↑↓</button>
+                    <button class="btn btn2" onclick="onAddLine()">+</button>
+                    <button class="btn btn3" onclick="onDeleteLine()">del</button>
+                </div>
+                <div class="item3">
+                    <button class="btn btn4" value="1" onclick="onSizeChange(this.value)">A<span>+</span></button>
+                    <button class="btn btn4" value="-1" onclick="onSizeChange(this.value)">A<span>-</span></button>
+                    <button class="btn btn6" value="end" onclick="onAlignChange(this.value)">lef</button>
+                    <button class="btn btn7" value="center" onclick="onAlignChange(this.value)">mid</button>
+                    <button class="btn btn8" value="start" onclick="onAlignChange(this.value)">rig</button>
+        
+                    <select name="font" id="font" class="txt-font" onchange="onFontChange(this.value)">
+                        <option value="impact">Impact</option>
+                        <option value="ariel">Ariel</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="sans-serif">sans-serif</option>
+                        <option value="serif">serif</option>
+                    </select>
+        
+                    <div class="btn btn11"><input type="color" class="txt-storke" onchange="onStrokeChange(this.value)"></div>
+                    <div class="btn btn12"><input type="color" class="txt-fill" onchange="onFillChange(this.value)"></div>
+                </div>
+                <div class="emoji item5"></div>
+                <div class="item6">
+                    <a href="#" class="btn btn9">Share</a>
+                    <a href="#" class="btn btn10"onclick="onDownLoadCanvas(this)" download="file-name">Download</a>
+            </div>
         </div>
     </section>
 
-    <footer>
+    <footer class="main-footer">
         <div class="logo">logo</div>
         <span>Made By Denis Lit</span>
     </footer>
