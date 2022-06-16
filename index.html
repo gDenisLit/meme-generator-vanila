@@ -17,7 +17,7 @@
         </ul>
     </header>
 
-    <section class="choose-memes">
+    <section class="meme-gallery">
         <input type="text" class="search" placeholder="Search memes">
         <div class="key-words">
             <ul class="clean-list">
@@ -29,12 +29,12 @@
         </div>
     </section>
 
-    <section class="edit-memes">
+    <section class="meme-editor">
         <div class="canvas-container">
             <canvas class="meme-canvas"></canvas>
         </div>
 
-        <div class="meme-editor">
+        <div class="editor">
 
             <input type="text" class="txt edit" placeholder="Enter Text Here" oninput="onTextInput(this.value)">
             <button class="btn txt switch" onclick="onSwichLines()">UP/DOWN</button>
@@ -62,6 +62,7 @@
         <span>Made By Denis Lit</span>
     </footer>
     
+    <script src="./js/view/canvas-render.js"></script>
     <script src="./js/view/gallery-render.js"></script>
 
     <script src="./js/model/utility-services.js"></script>

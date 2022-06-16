@@ -18,39 +18,20 @@ function clearCanvas() {
 
 function renderMeme(meme, lineIdx) {
     const {url, lines} = meme
-
-    const img = new Image()
-    img.src = url
-    gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
-
-    lines.forEach((line, idx) => {
-        const {txt, size, align, stroke, fill, pos} = line
-        const {x, y} = (pos)? pos : gDefaultLinePos[idx] 
-        if (idx === lineIdx) {
-
-        }
-        
-        gCtx.font = `${size} Ariel`
-        gCtx.textAlign = align
-    
-        gCtx.strokeStyle = stroke
-        gCtx.strokeText(txt, x, y)
-        gCtx.fillStyle = fill
-        gCtx.fillText(txt, x, y)
-    })
+    drawImageOnCanvas(url, gCtx)
+    drawTextOnCanvas(lines, lineIdx, gCtx)
 }
 
-function drawBoxOutline(x, y) {
-    gCtx.beginPath()
-    gCtx.rect(x, y, gShapeSize, gShapeSize)
+// function drawBoxOutline(x, y) {
+//     gCtx.beginPath()
+//     gCtx.rect(x, y, gShapeSize, gShapeSize)
 
-    gCtx.fillStyle = gCurrColor
-    gCtx.fillRect(x, y, gShapeSize, gShapeSize)
+//     gCtx.fillStyle = gCurrColor
+//     gCtx.fillRect(x, y, gShapeSize, gShapeSize)
 
-    gCtx.strokeStyle = gCurrColor
-    gCtx.stroke()
-    
-}
+//     gCtx.strokeStyle = gCurrColor
+//     gCtx.stroke()
+// }
 
 function _setCanvasSize() {
     gCanvasSize = {h: 500, w: 500}

@@ -16,6 +16,12 @@ function getImages() {
     return gImages
 }
 
+function loadGallery() {
+    gImages = _loadDataFromStorage(IMG_STORAGE_KEY)
+    if (!gImages) gImages = _createImages()
+    _saveDataToStorage(IMG_STORAGE_KEY, gImages)
+}
+
 function getMeme(imgId) {
     const img = gImages.find(img => img.id === imgId)
     gMeme = _createMeme(img)
@@ -26,11 +32,6 @@ function getImageById(id) {
     return gImages.find(img => img.id === id)
 }
 
-function loadGallery() {
-    gImages = _loadDataFromStorage(IMG_STORAGE_KEY)
-    if (!gImages) gImages = _createImages()
-    _saveDataToStorage(IMG_STORAGE_KEY, gImages)
-}
 
 function _createImages() {
     const images = []
@@ -99,7 +100,6 @@ function _createMemeLine() {
         pos: 0,
     }
 }
-
 
 function addNewLine() {
     const newLine = _createMemeLine()

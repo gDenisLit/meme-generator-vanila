@@ -12,7 +12,7 @@ function renderGallry() {
 
 function onImageSelect(imgId) {
     initEditor(imgId)
-    document.querySelector('.choose-memes').style.display = 'none'
-    document.querySelector('.edit-memes').style.display = 'block'
+    document.querySelector('.meme-gallery').style.display = 'none'
+    document.querySelector('.meme-editor').style.display = 'block'
 }
 

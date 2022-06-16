@@ -6,9 +6,9 @@ var gLinesCount
 function initEditor(imgId) {
     gCurrLine = 0
     gLinesCount = 1
-    const meme = getMeme(imgId)
-
+    
     initCanvas()
+    const meme = getMeme(imgId)
     renderMeme(meme, gCurrLine)
 }
 
