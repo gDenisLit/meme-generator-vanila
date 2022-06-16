@@ -100,7 +100,8 @@ function _createMemeLines() {
         txtSize: 50,
         align: 'center',
         stroke: 'black',
-        fill: 'white', 
+        fill: 'white',
+        font: 'Impact' 
     },
     {
         id: ++gLinesId,
@@ -110,6 +111,7 @@ function _createMemeLines() {
         align: 'center',
         stroke: 'black',
         fill: 'white',
+        font: 'Impact'
     }]
 }
 
@@ -128,6 +130,7 @@ function createNewLine() {
         align: 'center',
         stroke: 'black',
         fill: 'white', 
+        font: 'Impact'
     }
 }
 
@@ -135,6 +138,27 @@ function deleteLine(lineId) {
     const line = gMeme.lines.findIndex(line => line.id === lineId)
     gMeme.lines.splice(line, 1)
     return gMeme
+}
+
+function changeFontSize(val, lineId) {
+    console.log(gMeme)
+    gMeme.lines[lineId].txtSize += +val
+}
+
+function changeTextAlign(val, lineId) {
+    gMeme.lines[lineId].align = val
+}
+
+function changeTextFont(val, lineId) {
+    gMeme.lines[lineId].font = val
+}
+
+function changeStrokeStyle(val, lineId) {
+    gMeme.lines[lineId].stroke = val
+}
+
+function changeFillStyle(val, lineId) {
+    gMeme.lines[lineId].fill = val
 }
 
 function _loadDataFromStorage(key) {

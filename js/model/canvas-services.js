@@ -1,6 +1,6 @@
 'use strict'
 
-var gBoxes = []
+var gBoxes 
 var gLinesPos 
 
 function drawImageOnCanvas(url, ctx) {
@@ -9,16 +9,18 @@ function drawImageOnCanvas(url, ctx) {
     ctx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
 }
 
+
 function drawTextOnCanvas(lines, ctx) {
     const linesPos = getLinesPos(lines)
 
     lines.forEach(line => {
         const {imgSize, txt, txtSize, 
-            align, stroke, fill, id} = line
+            align, stroke, fill, id, font} = line
         
-        ctx.font = `${txtSize}px Impact`
+        console.log(align)
+        ctx.font = `${txtSize}px ${font}`
         ctx.textAlign = align
-        ctx.textBaseline = 'top'
+        ctx.textBaseline = 'middle'
         ctx.lineWidth = txtSize / 15
         
         ctx.setLineDash([0])
@@ -30,40 +32,52 @@ function drawTextOnCanvas(lines, ctx) {
 }
 
 function drawTextBoxOutline(lines, lineId, ctx) {
+    if (!gBoxes) {
+        gBoxes = _createBoxes(lines)
+    }
     lines.forEach((line, idx) => {
         const {txt, txtSize} = line
         const {x, y} = gLinesPos[idx]
 
         const xAxis = x - (ctx.measureText(txt).width / 2) - 10
-        const yAxis = y - (txtSize * 0.5) + 20
+        const yAxis = y - (txtSize * 0.5) -5 
         const width = ctx.measureText(txt).width + 20
         const height = txtSize + 10
 
-        _saveBox(xAxis, yAxis, width, height, idx)
+        updateBox(xAxis, yAxis, width, height, idx)
 
         if (idx === lineId) {
             ctx.beginPath()
             ctx.setLineDash([1])
-            ctx.rect(xAxis, yAxis, width, height)
+            ctx.rect(10, yAxis, 480, height)
             ctx.strokeStyle = 'black'
             ctx.stroke()   
         }
     })
+    
 }
 
-function _saveBox(xAxis, yAxis, width, height, lineIdx) {
-    let box = gBoxes.find(box => box.idx === lineIdx)
-    if (!box) {
-        box = {
-            x: xAxis + (width / 2),
-            y: yAxis + (height  /2),
-            w: width,
-            h: height,
-            idx: lineIdx,
+
+function updateBox(xAxis, yAxis, width, height, idx) {
+    gBoxes[idx].x = xAxis
+    gBoxes[idx].y = yAxis
+    gBoxes[idx].w = width
+    gBoxes[idx].h = height
+}
+
+function _createBoxes(lines) {
+    const boxes = []
+    lines.forEach((line, idx) => {
+        boxes.push({
+            x: 0,
+            y: 0,
+            w: 0,
+            h: 0,
+            idx,
             isDrag: false
-        }
-        gBoxes.push(box)
-    }
+        })
+    })
+    return boxes
 }
 
 function getBoxes() {
@@ -98,7 +112,7 @@ function getLinesPos(lines) {
             const {imgSize} = line
             linesPos.push({
                 x: imgSize.x / 2,
-                y: (line.id === 1)? imgSize.y - 70 : 10,
+                y: (line.id === 1)? imgSize.y - 50 : 40,
                 id: line.id
             })
         })

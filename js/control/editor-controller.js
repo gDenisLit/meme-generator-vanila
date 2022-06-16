@@ -18,7 +18,6 @@ function onTextInput(val) {
     renderMeme(meme, gCurrLine)
 }
 
-
 function getCurrLine() {
     return gCurrLine    
 }
@@ -32,6 +31,7 @@ function setCurrLine(idx) {
     renderMeme(meme, gCurrLine)
     setTextAreaValue(memeTxt)
 }
+
 function onAddLine() {
     if (gLinesCount < 3) gLinesCount++
     else return
@@ -51,24 +51,52 @@ function onDeleteLine() {
 
 function onSizeChange(val) {
     console.log('changin size...', val)
+    changeFontSize(val, gCurrLine)
+
+    const newMeme = getMeme()
+    renderMeme(newMeme, gCurrLine)
 }
 
 function onAlignChange(val) {
     console.log('changin align...', val)
+    changeTextAlign(val, gCurrLine)
+    const newMeme = getMeme()
+    renderMeme(newMeme, gCurrLine)
 }
 
 function onFontChange(val) {
     console.log('changing font...', val)
+    changeTextFont(val, gCurrLine)
+    const newMeme = getMeme()
+    renderMeme(newMeme, gCurrLine)
 }
 
 function onStrokeChange(val) {
     console.log('changing stroke...', val)
+    changeStrokeStyle(val, gCurrLine)
+    const newMeme = getMeme()
+    renderMeme(newMeme, gCurrLine)
 }
 
 function onFillChange(val) {
     console.log('chaging fill...', val)
+    changeFillStyle(val, gCurrLine)
+    const newMeme = getMeme()
+    renderMeme(newMeme, gCurrLine)
 }
+
+function onDownLoadCanvas(elLink) {
+    const meme = getMeme()
+    renderMeme(meme, -1)
+    const data = getDataUrl()
+    elLink.href = data
+    elLink.download = 'Your Meme'
+}
+
+
+
 
 function setTextAreaValue(txt = 'Enter Text Here') {
     document.querySelector('.txt-edit').value = txt
 }
+

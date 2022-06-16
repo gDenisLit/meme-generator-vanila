@@ -42,17 +42,22 @@
             <button class="btn txt del" onclick="onDeleteLine()">Delete Line</button>
             <button class="btn txt size" value="1" onclick="onSizeChange(this.value)">A+</button>
             <button class="btn txt size" value="-1" onclick="onSizeChange(this.value)">A-</button>
-            <button class="btn txt align-l" value="left" onclick="onAlignChange(this.value)">Text left</button>
-            <button class="btn txt align-m" value="middle" onclick="onAlignChange(this.value)">Text middle</button>
-            <button class="btn txt align-r" value="right" onclick="onAlignChange(this.value)">Text right</button>
+            <button class="btn txt align-l" value="end" onclick="onAlignChange(this.value)">Text left</button>
+            <button class="btn txt align-m" value="center" onclick="onAlignChange(this.value)">Text middle</button>
+            <button class="btn txt align-r" value="start" onclick="onAlignChange(this.value)">Text right</button>
 
             <select name="font" id="font" class="txt font" onchange="onFontChange(this.value)">
                 <option value="impact">Impact</option>
                 <option value="ariel">Ariel</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Courier New">Courier New</option>
+                <option value="sans-serif">sans-serif</option>
+                <option value="serif">serif</option>
             </select>
 
             <input type="color" class="txt stroke-color" onchange="onStrokeChange(this.value)">
             <input type="color" class="txt fill-color" onchange="onFillChange(this.value)">
+            <a href="#" onclick="onDownLoadCanvas(this)" download="file-name">Download</a>
 
         </div>
     </section>

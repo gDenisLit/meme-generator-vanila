@@ -11,6 +11,10 @@ function initCanvas() {
     addListeners()
 }
 
+function getDataUrl() {
+    return gCanvas.toDataURL()
+}
+
 function clearCanvas() {
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
 }
@@ -65,7 +69,6 @@ function onDown(ev) {
     else {
         setBoxDragOn(clickedBox.idx)
         setCurrLine(clickedBox.idx)
-        console.log(clickedBox.idx)
         gStartPos = pos
     }
     // document.body.style.cursor = 'grabbing'
@@ -75,10 +78,11 @@ function onDown(ev) {
 
 function onMove(ev) {
     const box = getBoxIsDrag()
+    console.log(box)
     if (!box) return 
     else {
+        
         const pos = getEvPos(ev)
-        //Calc the delta , the diff we moved
         const dx = pos.x - gStartPos.x
         const dy = pos.y - gStartPos.y
         moveBox(box, dx, dy)
@@ -119,15 +123,17 @@ function getEvPos(ev) {
 
 function isBoxClicked(clickedPos) {
     let clickedBox
+    const linesPos = getLinesPos()
     const boxes = getBoxes()
     boxes.forEach((box, idx) => {
 
-        const {x, y, w, h} = box
+        const {w, h} = box
+        const {x, y} = linesPos[idx]
         const maxDisFromX = w /2
         const maxDisFromY = h / 2
         const distanceFromX = Math.abs(x - clickedPos.x)
         const distanceFromY = Math.abs(y - clickedPos.y)
-    
+
         if (distanceFromX < maxDisFromX && 
             distanceFromY < maxDisFromY) {
             clickedBox = boxes[idx]
