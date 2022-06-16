@@ -1,136 +1,104 @@
 'use strict'
+var gBoxes = []
+var gLinesPos 
 
-var gCanvas
-var gCtx
-var gStartPos
-
-function initCanvas() {
-    gCanvas = document.querySelector('.meme-canvas')
-    gCtx = gCanvas.getContext('2d')
-    _setCanvasSize()
-    addListeners()
+function drawImageOnCanvas(url, ctx) {
+    const img = new Image()
+    img.src = url
+    ctx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
 }
 
-function clearCanvas() {
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
+function drawTextOnCanvas(lines, ctx) {
+    const linesPos = _getLinesPos(lines)
+
+    lines.forEach((line, idx) => {
+        const {imgSize, txt, txtSize, 
+            align, stroke, fill} = line
+        
+        ctx.font = `${txtSize}px Impact`
+        ctx.textAlign = align
+        ctx.textBaseline = 'top'
+        ctx.lineWidth = txtSize / 15
+        
+        ctx.setLineDash([0])
+        ctx.strokeStyle = stroke
+        ctx.strokeText(txt, linesPos[idx].x, linesPos[idx].y, imgSize.x)
+        ctx.fillStyle = fill
+        ctx.fillText(txt, linesPos[idx].x, linesPos[idx].y, imgSize.x)
+    })
 }
 
-function renderMeme(meme, lineIdx) {
-    clearCanvas()
-    const {url, lines} = meme
-    drawImageOnCanvas(url, gCtx)
-    drawTextOnCanvas(lines, gCtx)
-    drawTextBoxOutline(lines, lineIdx, gCtx)
-}
+function drawTextBoxOutline(lines, lineIdx, ctx) {
+    lines.forEach((line, idx) => {
+        const {txt, txtSize} = line
+        const {x, y} = gLinesPos[idx]
 
-function _setCanvasSize() {
-    const canvasSize = {h: 500, w: 500}
-    gCanvas.width = canvasSize.w
-    gCanvas.height = canvasSize.h
-}
+        const xAxis = x - (ctx.measureText(txt).width / 2) - 10
+        const yAxis = y - (txtSize * 0.5) + 20
+        const width = ctx.measureText(txt).width + 20
+        const height = txtSize + 10
 
-function _resizeCanvas() {
-    var elContainer = document.querySelector('.canvas-container')
-    gCanvas.width = elContainer.offsetWidth
-    gCanvas.height = elContainer.offsetHeight
-}
+        _saveBox(xAxis, yAxis, width, height, idx)
 
-function addListeners() {
-    addMouseListeners()
-    // addTouchListeners()
-    // //Listen for resize ev 
-    // window.addEventListener('resize', () => {
-    //     resizeCanvas()
-    //     renderCanvas()
-    // })
-}
-
-function addMouseListeners() {
-    gCanvas.addEventListener('mousemove', onMove)
-    gCanvas.addEventListener('mousedown', onDown)
-    gCanvas.addEventListener('mouseup', onUp)
-}
-
-// function addTouchListeners() {
-//     gCanvas.addEventListener('touchmove', onMove)
-//     gCanvas.addEventListener('touchstart', onDown)
-//     gCanvas.addEventListener('touchend', onUp)
-// }
-
-function onDown(ev) {
-    //Get the ev pos from mouse or touch
-    const pos = getEvPos(ev)
-    const clickedBox = isBoxClicked(pos)
-    if (!clickedBox) return 
-    else {
-        setBoxDragOn(clickedBox.idx)
-        setCurrLine(clickedBox.idx)
-        gStartPos = pos
-    }
-    // document.body.style.cursor = 'grabbing'
-}
-
-
-
-function onMove(ev) {
-    const box = getBoxIsDrag()
-    if (!box) return 
-    else {
-        const pos = getEvPos(ev)
-        //Calc the delta , the diff we moved
-        const dx = pos.x - gStartPos.x
-        const dy = pos.y - gStartPos.y
-        moveBox(box, dx, dy)
-        //Save the last pos , we remember where we`ve been and move accordingly
-        gStartPos = pos
-        //The canvas is render again after every move
-        const meme = getMeme()
-        const currLine = getCurrLine()
-        renderMeme(meme, currLine)
-    }
-}
-
-function onUp() {
-    setBoxDragOff()
-    // document.body.style.cursor = 'grab'
-}
-
-function getEvPos(ev) {
-    //Gets the offset pos , the default pos
-    var pos = {
-        x: ev.offsetX,
-        y: ev.offsetY
-    }
-    // Check if its a touch ev
-    // if (gTouchEvs.includes(ev.type)) {
-    //     //soo we will not trigger the mouse ev
-    //     ev.preventDefault()
-    //     //Gets the first touch point
-    //     ev = ev.changedTouches[0]
-    //     //Calc the right pos according to the touch screen
-    //     pos = {
-    //         x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-    //         y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
-    //     }
-    // }
-    return pos
-}
-
-function isBoxClicked(clickedPos) {
-    let clickedBox
-    const boxes = getBoxes()
-    boxes.forEach((box, idx) => {
-
-        const {x, y, w, h} = box
-        const maxDisFromX = w /2
-        const maxDisFromY = h / 2
-        const distanceFromX = Math.abs(x - clickedPos.x)
-        const distanceFromY = Math.abs(y - clickedPos.y)
-    
-        if (distanceFromX < maxDisFromX && 
-            distanceFromY < maxDisFromY) {
-            clickedBox = boxes[idx]
+        if (idx === lineIdx) {
+            ctx.beginPath()
+            ctx.setLineDash([1])
+            ctx.rect(xAxis, yAxis, width, height)
+            ctx.strokeStyle = 'black'
+            ctx.stroke()   
         }
     })
-    return clickedBox
+}
+
+function _saveBox(xAxis, yAxis, width, height, lineIdx) {
+    let box = gBoxes.find(box => box.idx === lineIdx)
+    if (!box) {
+        box = {
+            x: xAxis + (width / 2),
+            y: yAxis + (height  /2),
+            w: width,
+            h: height,
+            idx: lineIdx,
+            isDrag: false
+        }
+        gBoxes.push(box)
+    }
+}
+
+function getBoxes() {
+    return gBoxes
+}
+
+function setBoxDragOn(boxIdx) {
+    gBoxes[boxIdx].isDrag = true
+}
+
+function setBoxDragOff() {
+    gBoxes.forEach(box => box.isDrag = false)
+}
+
+function getBoxIsDrag() {
+    const box = gBoxes.find(box => box.isDrag === true)
+    return box
+}
+
+function moveBox(box, dx, dy) {
+    gLinesPos[box.idx].x += dx
+    gLinesPos[box.idx].y += dy
+}
+
+function _getLinesPos(lines) {
+    if (!gLinesPos) {
+        const linesPos = []
+        lines.forEach((line, idx) => {
+            const {imgSize} = line
+            linesPos.push({
+                x: imgSize.x / 2,
+                y: (idx === 1)? imgSize.y - 70 : 10,
+                idx,
+            })
+        })
+        gLinesPos = linesPos
+    }
+    return gLinesPos
 }
