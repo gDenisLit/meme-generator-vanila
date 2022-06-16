@@ -9,12 +9,11 @@ function initEditor(imgId) {
     
     initCanvas()
     const meme = getMeme(imgId)
-    renderMeme(meme, gCurrLine)
+    renderMeme(meme)
 }
 
 function onTextInput(val) {
     const editedMeme = setMemeText(val, gCurrLine)
-    clearCanvas()
     renderMeme(editedMeme)
 }
 
@@ -28,7 +27,6 @@ function onAddLine() {
     else return
 
     const meme = addNewLine()
-    clearCanvas()
     renderMeme(meme)
 }
 

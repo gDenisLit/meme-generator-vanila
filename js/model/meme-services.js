@@ -81,7 +81,7 @@ function _createMeme(img) {
         imgId: img.id,
         lineIdx: 0,
         isSelected: false,
-        lines: [_createMemeLine()]
+        lines: _createMemeLine()
     }
 }
 
@@ -91,14 +91,25 @@ function setMemeText(txt, lineIdx) {
 }
 
 function _createMemeLine() {
-    return {
-        txt: 'Your Text Here',
-        size: '50px',
-        align: 'left',
+    return [{
+        imgSize: {x: 500, y: 500},
+        txt: 'Your Text',
+        txtSize: 50,
+        align: 'center',
         stroke: 'black',
-        fill: 'red',
-        pos: 0,
-    }
+        fill: 'white',
+        baseline: 'top'
+        
+    },
+    {
+        imgSize: {x: 500, y: 500},
+        txt: 'Your Text',
+        txtSize: 50,
+        align: 'center',
+        stroke: 'black',
+        fill: 'white',
+        baseline: 'bottom'
+    }]
 }
 
 function addNewLine() {
