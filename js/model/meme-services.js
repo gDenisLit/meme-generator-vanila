@@ -8,6 +8,7 @@ const KEYWORDS_STORAGE_KEY = 'keywordsDB'
 var gImages
 var gImagesUrls
 var gMeme
+var gLinesId
 var gKeyWords
 var gKeyWordSearchCountMap
 
@@ -80,9 +81,8 @@ function _createMeme(img) {
     return {
         url: img.url,
         imgId: img.id,
-        lineIdx: 0,
         isSelected: false,
-        lines: _createMemeLine()
+        lines: _createMemeLines()
     }
 }
 
@@ -91,8 +91,10 @@ function setMemeText(txt, lineIdx) {
     return gMeme
 }
 
-function _createMemeLine() {
+function _createMemeLines() {
+    gLinesId = 0
     return [{
+        id: gLinesId,
         imgSize: {x: 500, y: 500},
         txt: 'Your Text',
         txtSize: 50,
@@ -101,6 +103,7 @@ function _createMemeLine() {
         fill: 'white', 
     },
     {
+        id: ++gLinesId,
         imgSize: {x: 500, y: 500},
         txt: 'Your Text',
         txtSize: 50,
@@ -111,8 +114,26 @@ function _createMemeLine() {
 }
 
 function addNewLine() {
-    const newLine = _createMemeLine()
+    const newLine = createNewLine()
     gMeme.lines.push(newLine)
+    return gMeme
+}
+
+function createNewLine() {
+    return {
+        id: ++gLinesId,
+        imgSize: {x: 500, y: 500},
+        txt: 'Your Text',
+        txtSize: 50,
+        align: 'center',
+        stroke: 'black',
+        fill: 'white', 
+    }
+}
+
+function deleteLine(lineId) {
+    const line = gMeme.lines.findIndex(line => line.id === lineId)
+    gMeme.lines.splice(line, 1)
     return gMeme
 }
 

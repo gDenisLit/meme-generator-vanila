@@ -4,11 +4,11 @@ var gCurrLine
 var gLinesCount
 
 function initEditor(imgId) {
-    gCurrLine = 0
-    gLinesCount = 1
+    gLinesCount = 2
     
     initCanvas()
     const meme = getMeme(imgId)
+    gCurrLine = meme.lines[0].id
     renderMeme(meme, gCurrLine)
     setTextAreaValue(meme.lines[gCurrLine].txt)
 }
@@ -18,23 +18,19 @@ function onTextInput(val) {
     renderMeme(meme, gCurrLine)
 }
 
-function onSwichLines() {
-    if (gCurrLine === 0) gCurrLine++
-    else if (gCurrLine === gLinesCount) gCurrLine--
-
-    const meme = getMeme()
-    renderMeme(meme, gCurrLine)
-    setTextAreaValue(meme.lines[gCurrLine].txt)
-}
 
 function getCurrLine() {
-    return gCurrLine
+    return gCurrLine    
 }
 
 function setCurrLine(idx) {
     gCurrLine = idx
     const meme = getMeme()
+    const memeTxt = (meme.lines.length < 2)? 
+        meme.lines[0].txt : meme.lines[gCurrLine].txt
+
     renderMeme(meme, gCurrLine)
+    setTextAreaValue(memeTxt)
 }
 function onAddLine() {
     if (gLinesCount < 3) gLinesCount++
@@ -45,7 +41,12 @@ function onAddLine() {
 }
 
 function onDeleteLine() {
-    console.log('deleting line...')
+    const meme = getMeme()
+    if (!meme.lines.length) return
+
+    const newMeme = deleteLine(gCurrLine)
+    gCurrLine = newMeme.lines[0].id
+    renderMeme(newMeme, gCurrLine)
 }
 
 function onSizeChange(val) {
@@ -68,6 +69,6 @@ function onFillChange(val) {
     console.log('chaging fill...', val)
 }
 
-function setTextAreaValue(txt) {
+function setTextAreaValue(txt = 'Enter Text Here') {
     document.querySelector('.txt-edit').value = txt
 }

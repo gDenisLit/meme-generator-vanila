@@ -15,12 +15,12 @@ function clearCanvas() {
     gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
 }
 
-function renderMeme(meme, lineIdx) {
+function renderMeme(meme, lineId) {
     clearCanvas()
     const {url, lines} = meme
     drawImageOnCanvas(url, gCtx)
     drawTextOnCanvas(lines, gCtx)
-    drawTextBoxOutline(lines, lineIdx, gCtx)
+    drawTextBoxOutline(lines, lineId, gCtx)
 }
 
 function _setCanvasSize() {
@@ -65,6 +65,7 @@ function onDown(ev) {
     else {
         setBoxDragOn(clickedBox.idx)
         setCurrLine(clickedBox.idx)
+        console.log(clickedBox.idx)
         gStartPos = pos
     }
     // document.body.style.cursor = 'grabbing'

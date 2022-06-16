@@ -1,4 +1,5 @@
 'use strict'
+
 var gBoxes = []
 var gLinesPos 
 
@@ -9,11 +10,11 @@ function drawImageOnCanvas(url, ctx) {
 }
 
 function drawTextOnCanvas(lines, ctx) {
-    const linesPos = _getLinesPos(lines)
+    const linesPos = getLinesPos(lines)
 
-    lines.forEach((line, idx) => {
+    lines.forEach(line => {
         const {imgSize, txt, txtSize, 
-            align, stroke, fill} = line
+            align, stroke, fill, id} = line
         
         ctx.font = `${txtSize}px Impact`
         ctx.textAlign = align
@@ -22,13 +23,13 @@ function drawTextOnCanvas(lines, ctx) {
         
         ctx.setLineDash([0])
         ctx.strokeStyle = stroke
-        ctx.strokeText(txt, linesPos[idx].x, linesPos[idx].y, imgSize.x)
+        ctx.strokeText(txt, linesPos[id].x, linesPos[id].y, imgSize.x)
         ctx.fillStyle = fill
-        ctx.fillText(txt, linesPos[idx].x, linesPos[idx].y, imgSize.x)
+        ctx.fillText(txt, linesPos[id].x, linesPos[id].y, imgSize.x)
     })
 }
 
-function drawTextBoxOutline(lines, lineIdx, ctx) {
+function drawTextBoxOutline(lines, lineId, ctx) {
     lines.forEach((line, idx) => {
         const {txt, txtSize} = line
         const {x, y} = gLinesPos[idx]
@@ -40,7 +41,7 @@ function drawTextBoxOutline(lines, lineIdx, ctx) {
 
         _saveBox(xAxis, yAxis, width, height, idx)
 
-        if (idx === lineIdx) {
+        if (idx === lineId) {
             ctx.beginPath()
             ctx.setLineDash([1])
             ctx.rect(xAxis, yAxis, width, height)
@@ -85,17 +86,20 @@ function getBoxIsDrag() {
 function moveBox(box, dx, dy) {
     gLinesPos[box.idx].x += dx
     gLinesPos[box.idx].y += dy
+
+    gBoxes[box.idx].x += dx
+    gBoxes[box.idx].y += dy
 }
 
-function _getLinesPos(lines) {
+function getLinesPos(lines) {
     if (!gLinesPos) {
         const linesPos = []
-        lines.forEach((line, idx) => {
+        lines.forEach(line => {
             const {imgSize} = line
             linesPos.push({
                 x: imgSize.x / 2,
-                y: (idx === 1)? imgSize.y - 70 : 10,
-                idx,
+                y: (line.id === 1)? imgSize.y - 70 : 10,
+                id: line.id
             })
         })
         gLinesPos = linesPos
