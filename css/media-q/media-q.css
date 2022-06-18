@@ -20,8 +20,49 @@
         margin-block-end: 1rem;
     }
     
+    .dropbtn {
+        background-color: transparent;
+        color: var(--clr4);
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 3px solid var(--clr4);
+        border-radius: 50%;
+        width: 3rem;
+    }
+    
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        right: 10%
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        font-family: poppins-regular;
+    }
+    
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: right;
+    }
+    
+    .dropdown-content a:hover {background-color: var(--clr4);}
+    
+    .dropdown:hover .dropdown-content {display: block;}
+    
+    .dropdown:hover .dropbtn {background-color: var(--clr5);}
+    
+    
     .main-header .page-nav {
-        margin-inline-end: 100px;
+        display: none;
     }
 
     .meme-gallery .meme-filter {
@@ -51,6 +92,24 @@
     }
 
     .images-wrapper { 
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+@media (min-width: 600px) {
+    .images-wrapper { 
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+}
+
+@media (min-width: 800px) {
+    .images-wrapper { 
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
     }
@@ -77,7 +136,9 @@
     }
     
     .main-header .page-nav {
+        display: flex;
         margin-inline-end: 220px;
+        justify-content: flex-end;
     }
 
     .meme-gallery .meme-filter {
@@ -102,5 +163,13 @@
 
     .meme-editor {
         flex-direction: row;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .dropdown {
+        display: none;
     }
 }

@@ -10,10 +10,6 @@
     text-transform: uppercase;
 }
 
-.main-header .page-nav {
-    justify-content: flex-end;
-
-}
 .main-header .page-nav a {
     font-family: poppins-medium;
     color: var(--clr4);
