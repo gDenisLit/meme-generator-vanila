@@ -1,0 +1,39 @@
+.main-header {
+    width: 100%;    
+    border-radius: 40px;
+    padding: 20px;
+    background-image: linear-gradient(-86deg, #33be6d 0%, #0c98b9 100%);
+}
+
+.logo {
+    font-family: poppins-medium;
+    font-size: 1.375rem;
+    color: var(--clr4);
+    text-transform: uppercase;
+    margin-inline-start: 5rem;
+}
+
+.main-header .page-nav {
+    justify-content: end;
+}
+  
+
+.main-header .page-nav a {
+    font-family: poppins-medium;
+    color: var(--clr4);
+    font-size: 1.3125rem;
+    border-radius: 20px;
+    padding-left: 1.3125rem;
+    padding-right: 1.3125rem;
+    margin-inline-start: 20px;
+}
+
+.main-header .page-nav {
+    margin-inline-end: 220px;
+}
+
+.main-header .page-nav a:active {
+    color: var(--clr5);
+    background-color: var(--clr6);
+}
+

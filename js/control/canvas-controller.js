@@ -4,39 +4,38 @@ var gCanvas
 var gCtx
 var gStartPos
 
-function initCanvas() {
-    gCanvas = document.querySelector('.meme-canvas')
+function initCanvas(meme) {
+    gCanvas = getElCanvas()
     gCtx = gCanvas.getContext('2d')
-    _setCanvasSize()
-    addListeners()
+
+    setCanvasSize(meme)
+    renderMeme(meme)
+    addListeners() 
+}
+
+function renderMeme(meme, editMode=1) {
+    const {img, lines} = meme
+    
+    clearCanvas(gCtx)
+    drawImageOnCanvas(img, gCtx)
+    drawLinesOnCanvas(lines, gCtx, editMode)
+}
+
+function setCanvasSize(meme) {
+    const {w, h} = meme.img
+    gCanvas.width = w
+    gCanvas.height = h
+}
+
+function getCanvasSize() {
+    return {
+        w: gCanvas.width,
+        h: gCanvas.height
+    }
 }
 
 function getDataUrl() {
     return gCanvas.toDataURL()
-}
-
-function clearCanvas() {
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
-}
-
-function renderMeme(meme, lineId) {
-    clearCanvas()
-    const {url, lines} = meme
-    drawImageOnCanvas(url, gCtx)
-    drawTextOnCanvas(lines, gCtx)
-    drawTextBoxOutline(lines, lineId, gCtx)
-}
-
-function _setCanvasSize() {
-    const canvasSize = {h: 500, w: 500}
-    gCanvas.width = canvasSize.w
-    gCanvas.height = canvasSize.h
-}
-
-function _resizeCanvas() {
-    var elContainer = document.querySelector('.canvas-container')
-    gCanvas.width = elContainer.offsetWidth
-    gCanvas.height = elContainer.offsetHeight
 }
 
 function addListeners() {
@@ -62,48 +61,37 @@ function addMouseListeners() {
 // }
 
 function onDown(ev) {
-    //Get the ev pos from mouse or touch
     const pos = getEvPos(ev)
-    const clickedBox = isBoxClicked(pos)
-    if (!clickedBox) return 
-    else {
-        setBoxDragOn(clickedBox.idx)
-        setCurrLine(clickedBox.idx)
-        gStartPos = pos
-    }
-    // document.body.style.cursor = 'grabbing'
+    const selectedText = isTextSelected(pos, gCtx)
+    if (!selectedText) return
+
+    onSwichLines(selectedText.id)
+    setLineIsDrag(selectedText.id)
+    gStartPos = pos
 }
 
-
-
 function onMove(ev) {
-    const box = getBoxIsDrag()
-    if (!box) return 
-    else {
-        
-        const pos = getEvPos(ev)
-        const dx = pos.x - gStartPos.x
-        const dy = pos.y - gStartPos.y
-        moveBox(box, dx, dy)
-        //Save the last pos , we remember where we`ve been and move accordingly
-        gStartPos = pos
-        //The canvas is render again after every move
-        const meme = getMeme()
-        const currLine = getCurrLine()
-        renderMeme(meme, currLine)
-    }
+    const line = getLineIsDrag()
+    if (!line) return
+
+    const pos = getEvPos(ev)
+
+    const dx = pos.clickX - gStartPos.clickX
+    const dy = pos.clickY - gStartPos.clickY
+
+    gStartPos = pos
+    moveLine(line.id, dx, dy)
+    updateCanvas()
 }
 
 function onUp() {
-    setBoxDragOff()
-    // document.body.style.cursor = 'grab'
+    setLinesDragOff()
 }
 
 function getEvPos(ev) {
-    //Gets the offset pos , the default pos
     var pos = {
-        x: ev.offsetX,
-        y: ev.offsetY
+        clickX: ev.offsetX,
+        clickY: ev.offsetY
     }
     // Check if its a touch ev
     // if (gTouchEvs.includes(ev.type)) {
@@ -120,23 +108,25 @@ function getEvPos(ev) {
     return pos
 }
 
-function isBoxClicked(clickedPos) {
-    let clickedBox
-    const linesPos = getLinesPos()
-    const boxes = getBoxes()
-    boxes.forEach((box, idx) => {
+// function isBoxClicked(clickedPos) {
+//     let clickedBox
+//     const linesPos = setLinesPos()
+//     const boxes = getBoxes()
+//     boxes.forEach((box, idx) => {
 
-        const {w, h} = box
-        const {x, y} = linesPos[idx]
-        const maxDisFromX = w /2
-        const maxDisFromY = h / 2
-        const distanceFromX = Math.abs(x - clickedPos.x)
-        const distanceFromY = Math.abs(y - clickedPos.y)
+//         const {w, h} = box
+//         const {x, y} = linesPos[idx]
+//         const maxDisFromX = w /2
+//         const maxDisFromY = h / 2
+//         const distanceFromX = Math.abs(x - clickedPos.x)
+//         const distanceFromY = Math.abs(y - clickedPos.y)
 
-        if (distanceFromX < maxDisFromX && 
-            distanceFromY < maxDisFromY) {
-            clickedBox = boxes[idx]
-        }
-    })
-    return clickedBox
-}
+//         if (distanceFromX < maxDisFromX && 
+//             distanceFromY < maxDisFromY) {
+//             clickedBox = boxes[idx]
+//         }
+//     })
+//     return clickedBox
+// }
+
+

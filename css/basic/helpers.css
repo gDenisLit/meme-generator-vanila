@@ -1,0 +1,32 @@
+.clean-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.flex-row {
+    display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex .content-center {
+    justify-content: center;
+}
+
+.flex .items-center {
+    align-items: center;
+}
+
+.flex .space-between {
+    justify-content: space-between;
+}
+
+.btn {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+}

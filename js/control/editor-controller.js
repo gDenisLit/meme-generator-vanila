@@ -1,87 +1,80 @@
 'use strict'
 
-var gCurrLine
-var gLinesCount
-
-function initEditor(imgId) {
-    gLinesCount = 2
-    
-    initCanvas()
+function initMemeEditor(imgId) {
     const meme = getMeme(imgId)
-    gCurrLine = meme.lines[0].id
-    renderMeme(meme, gCurrLine)
-    setTextAreaValue(meme.lines[gCurrLine].txt)
+    initCanvas(meme)
+}
+
+function updateCanvas() {
+    const newMeme = getMeme()
+    renderMeme(newMeme)
 }
 
 function onTextInput(val) {
-    const meme = setMemeText(val, gCurrLine)
-    renderMeme(meme, gCurrLine)
+    const currLineIdx = getCurrLineIdx()
+    updateLineText(val, currLineIdx)
+    updateCanvas()
 }
 
-function getCurrLine() {
-    return gCurrLine    
-}
+function onSwichLines(lineId) {
+    const totalLineCount = getLinesCount()
+    switchCurrLine(totalLineCount, lineId)
 
-function setCurrLine(idx) {
-    gCurrLine = idx
-    const meme = getMeme()
-    const memeTxt = (meme.lines.length < 2)? 
-        meme.lines[0].txt : meme.lines[gCurrLine].txt
+    const currLineIdx = getCurrLineIdx()
+    const {txt, font, stroke, fill} = getLine(currLineIdx)
 
-    renderMeme(meme, gCurrLine)
-    setTextAreaValue(memeTxt)
+    updateTextArea(txt)
+    updateFontPicker(font)
+    updateStrokePicker(stroke)
+    updateFillPicker(fill)
+    updateCanvas()
 }
 
 function onAddLine() {
-    const meme = addNewLine()
-    const {lines} = meme
-    gCurrLine = (lines[lines.length -1].id)
-    renderMeme(meme, gCurrLine )
+    const newLineId = addLine()
+    onSwichLines(newLineId)
 }
 
 function onDeleteLine() {
-    const meme = getMeme()
-    if (!meme.lines.length) return
-
-    const newMeme = deleteLine(gCurrLine)
-    gCurrLine = newMeme.lines[0].id
-    renderMeme(newMeme, gCurrLine)
+    const currLineIdx = getCurrLineIdx()
+    deleteLine(currLineIdx)
+    onSwichLines()
 }
 
 function onSizeChange(val) {
-    changeFontSize(val, gCurrLine)
-
-    const newMeme = getMeme()
-    renderMeme(newMeme, gCurrLine)
+    const currLineIdx = getCurrLineIdx()
+    changeFontSize(val, currLineIdx)
+    updateCanvas()
 }
 
 function onAlignChange(val) {
-    changeTextAlign(val, gCurrLine)
-    const newMeme = getMeme()
-    renderMeme(newMeme, gCurrLine)
+    const currLineIdx = getCurrLineIdx()
+    resetCanvasAlign(currLineIdx, val)
+    changeTextAlign(val, currLineIdx)
+    updateCanvas()
 }
 
 function onFontChange(val) {
-    changeTextFont(val, gCurrLine)
-    const newMeme = getMeme()
-    renderMeme(newMeme, gCurrLine)
+    const currLineIdx = getCurrLineIdx()
+    changeTextFont(val, currLineIdx)
+    updateCanvas()
 }
 
 function onStrokeChange(val) {
-    changeStrokeStyle(val, gCurrLine)
-    const newMeme = getMeme()
-    renderMeme(newMeme, gCurrLine)
+    const currLineIdx = getCurrLineIdx()
+    changeStrokeStyle(val, currLineIdx)
+    updateCanvas()
 }
 
 function onFillChange(val) {
-    changeFillStyle(val, gCurrLine)
-    const newMeme = getMeme()
-    renderMeme(newMeme, gCurrLine)
+    const currLineIdx = getCurrLineIdx()
+    changeFillStyle(val, currLineIdx)
+    updateCanvas()
 }
 
 function onDownLoadCanvas(elLink) {
-    const meme = getMeme()
-    renderMeme(meme, -1)
+    const newMeme = getMeme()
+    renderMeme(newMeme, 0)
     const data = getDataUrl()
     elLink.href = data
     elLink.download = 'Your Meme'
@@ -90,7 +83,4 @@ function onDownLoadCanvas(elLink) {
 
 
 
-function setTextAreaValue(txt = 'Enter Text Here') {
-    document.querySelector('.txt-edit').value = txt
-}
 

@@ -1,121 +1,152 @@
 'use strict'
 
-var gBoxes 
-var gLinesPos 
+var gCurrLineIdx = 0
+var gLinesPos = []
 
-function drawImageOnCanvas(url, ctx) {
-    const img = new Image()
-    img.src = url
-    ctx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
+function clearCanvas(ctx) {
+    const { w, h } = getCanvasSize()
+    ctx.clearRect(0, 0, w, h)
 }
 
+function drawImageOnCanvas(img, ctx) {
+    const { w, h } = getCanvasSize()
+    const elImg = new Image()
+    const { url } = img
 
-function drawTextOnCanvas(lines, ctx) {
-    const linesPos = getLinesPos(lines)
+    elImg.src = url
+    ctx.drawImage(elImg, 0, 0, w, h)
+}
 
-    lines.forEach(line => {
-        const {imgSize, txt, txtSize, 
-            align, stroke, fill, id, font} = line
-        
+function drawLinesOnCanvas(lines, ctx, editMode) {
+    const linesPos = []
+    lines.forEach((line, idx) => {
+        const { txt, txtSize, align, stroke, fill, font, id } = line
+
         ctx.font = `${txtSize}px ${font}`
         ctx.textAlign = align
-        ctx.textBaseline = 'middle'
+        ctx.textBaseline = 'top'
         ctx.lineWidth = txtSize / 15
-        
+
+        const { x, y } = getLinePos(id, align)
+        // console.log(x, y)
+        // console.log(align)
+        const { w } = getCanvasSize()
+        linesPos.push({ x, y, align, txt, txtSize, id })
+
         ctx.setLineDash([0])
         ctx.strokeStyle = stroke
-        ctx.strokeText(txt, linesPos[id].x, linesPos[id].y, imgSize.x)
+        ctx.strokeText(txt, x, y, w)
         ctx.fillStyle = fill
-        ctx.fillText(txt, linesPos[id].x, linesPos[id].y, imgSize.x)
-    })
-}
+        ctx.fillText(txt, x, y, w)
 
-function drawTextBoxOutline(lines, lineId, ctx) {
-    if (!gBoxes) {
-        gBoxes = _createBoxes(lines)
-    }
-    lines.forEach((line, idx) => {
-        const {txt, txtSize} = line
-        const {x, y} = gLinesPos[idx]
-
-        const xAxis = x - (ctx.measureText(txt).width / 2) - 10
-        const yAxis = y - (txtSize * 0.5) -5 
-        const width = ctx.measureText(txt).width + 20
-        const height = txtSize + 10
-
-        updateBox(xAxis, yAxis, width, height, idx)
-
-        if (idx === lineId) {
-            ctx.beginPath()
-            ctx.setLineDash([1])
-            ctx.rect(10, yAxis, 480, height)
-            ctx.strokeStyle = 'black'
-            ctx.stroke()   
+        if (idx === gCurrLineIdx && editMode) {
+            drawTextBoxOutline(txtSize, y, ctx)
         }
     })
+    gLinesPos = linesPos
+}
+
+function getLinePos(lineId, align) {
+    const line = gLinesPos.find(line => line.id === lineId)
+    if (line) {
+        console.log('already have a pos')
+        return line
+    }
+
+    const { w, h } = getCanvasSize()
+    let x, y
+
+    if (align === 'start') x = w * 0.1
+    else if (align === 'end') x = w * 0.9
+    else x = w * 0.5
+
+    if (!lineId) y = h * 0.03
+    else if (lineId === 1) y = h * 0.85
+    else y = h * 0.4
+
+    return { x, y }
+}
+
+function isTextSelected(pos, ctx) {
+    let selectedText
+    const { clickX, clickY } = pos
+
+    gLinesPos.forEach(line => {
+        const { txtSize } = line
+        const { txtX, txtY, txtWidth } = _txtCenterPos(line, ctx)
+
+        const maxDisFromX = txtWidth / 2
+        const maxDisFromY = txtSize / 2
+
+        const disFromX = Math.abs(txtX - clickX)
+        const disFromY = Math.abs(txtY - clickY)
+
+        if (disFromX < maxDisFromX &&
+            disFromY < maxDisFromY) {
+            selectedText = line
+        }
+    })
+    return selectedText
+}
+
+
+function drawTextBoxOutline(txtSize, txtY, ctx) {
+    const { w } = getCanvasSize()
+    const x = w * 0.05
+    const y = txtY - 5
+    
+    ctx.beginPath()
+    ctx.setLineDash([2])
+    ctx.rect(x, y, w * 0.9, txtSize + 10)
+    ctx.strokeStyle = '#505050'
+    ctx.lineWidth = 8
+    ctx.stroke()
+}
+
+function switchCurrLine(linesCount, lineId) {
+    if (lineId !== undefined) {
+        gCurrLineIdx = lineId
+        return
+    }
+    if (gCurrLineIdx < linesCount - 1) gCurrLineIdx++
+    else if (gCurrLineIdx >= linesCount - 1) gCurrLineIdx = 0
     
 }
 
-
-function updateBox(xAxis, yAxis, width, height, idx) {
-    gBoxes[idx].x = xAxis
-    gBoxes[idx].y = yAxis
-    gBoxes[idx].w = width
-    gBoxes[idx].h = height
+function resetCanvasAlign(currLineIdx, align) {
+    const { w } = getCanvasSize()
+    
+    let x
+    if (align === 'start') x = w * 0.1
+    else if (align === 'end') x = w * 0.9
+    else x = w * 0.5
+    
+    gLinesPos[currLineIdx].x = x
+    gLinesPos[currLineIdx].align = align
 }
 
-function _createBoxes(lines) {
-    const boxes = []
-    lines.forEach((line, idx) => {
-        boxes.push({
-            x: 0,
-            y: 0,
-            w: 0,
-            h: 0,
-            idx,
-            isDrag: false
-        })
-    })
-    return boxes
+function getCurrLineIdx() {
+    return gCurrLineIdx
 }
 
-function getBoxes() {
-    return gBoxes
+function moveLine(lineId, dx, dy) {
+    const line = gLinesPos.find(line => line.id === lineId)
+    line.x += dx
+    line.y += dy
 }
 
-function setBoxDragOn(boxIdx) {
-    gBoxes[boxIdx].isDrag = true
+function _txtCenterPos(line, ctx) {
+    const { x, y, align, txt, txtSize } = line
+    const txtWidth = ctx.measureText(txt).width
+    const txtY = y + (txtSize / 2)
+
+    let txtX
+    if (align === 'start') txtX = x + (txtWidth / 2)
+    else if (align === 'end') txtX = x - (txtWidth / 2)
+    else txtX = x
+
+    return { txtX, txtY, txtWidth }
 }
 
-function setBoxDragOff() {
-    gBoxes.forEach(box => box.isDrag = false)
-}
 
-function getBoxIsDrag() {
-    const box = gBoxes.find(box => box.isDrag === true)
-    return box
-}
 
-function moveBox(box, dx, dy) {
-    gLinesPos[box.idx].x += dx
-    gLinesPos[box.idx].y += dy
-
-    gBoxes[box.idx].x += dx
-    gBoxes[box.idx].y += dy
-}
-
-function getLinesPos(lines) {
-    if (!gLinesPos) {
-        const linesPos = []
-        lines.forEach(line => {
-            const {imgSize} = line
-            linesPos.push({
-                x: imgSize.x / 2,
-                y: (line.id === 1)? imgSize.y - 50 : 40,
-                id: line.id
-            })
-        })
-        gLinesPos = linesPos
-    }
-    return gLinesPos
-}

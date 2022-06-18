@@ -1,0 +1,107 @@
+.meme-editor{
+    display: none;
+}
+
+.canvas-container {
+    margin-inline-end: 20px;
+}
+
+.editor {
+    background-color: var(--clr11);
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+.editor .txt-edit {
+    width: 445px;
+    max-height: 80px;
+    padding-top: 1.5rem;
+    margin-block-end: 1rem;
+
+    font-size: 1.5625rem;
+    font-family: poppins-medium;
+    text-align: center;
+
+    border-radius: 28px;
+    background-color: var(--clr10);
+    color: var(--clr12)
+}
+
+.crud {
+    width: 50%;
+    margin-block-end: 1rem;
+}
+
+.text-manipulation {
+    background-color: var(--clr15);
+    border-radius: 15px;
+    padding: 17px;
+    margin-block-end: 1rem;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 5px;
+    grid-auto-flow: row;
+}
+
+.txt-font {
+    grid-area: 2 / span 3 ;
+    width: 236px;
+    border-radius: 15px;
+    text-align: center;
+    max-height: 50px;
+}
+
+input[type="color"] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+
+}
+
+*:focus{
+    border-radius: 0;
+    outline: none;
+}
+
+::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+::-webkit-color-swatch{
+    border: 0;
+    border-radius: 0;
+}
+
+::-moz-color-swatch,
+::-moz-focus-inner{
+    border: 0;
+}
+
+::-moz-focus-inner{
+    padding: 0;
+}
+
+.meme-export {
+    margin-block-end: 1rem;
+}
+
+.export {
+    font-family: poppins-medium;
+    text-align: center;
+    font-size: 1.3125rem;
+    background-color: var(--clr13);
+    color: var(--clr4);
+
+    border-radius: 15px;
+    padding: 0.5rem;
+}
+
+.download {
+    background-color: var(--clr14);
+}

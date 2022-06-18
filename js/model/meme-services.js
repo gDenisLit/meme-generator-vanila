@@ -1,28 +1,9 @@
 'use strict'
 
-const IMG_STORAGE_KEY = 'imgDB'
-const IMG_URLS_STORAGE_KEY = 'imgUrlDB'
 const MEME_STORAGE_KEY = 'memeDB'
-const KEYWORDS_STORAGE_KEY = 'keywordsDB'
-
-var gImages
-var gImagesUrls
 var gMeme
-var gLinesId
-var gKeyWords
-var gKeyWordSearchCountMap
 
-function getImages() {
-    loadGallery()
-    return gImages
-}
-
-function loadGallery() {
-    gImages = _loadDataFromStorage(IMG_STORAGE_KEY)
-    if (!gImages) gImages = _createImages()
-    _saveDataToStorage(IMG_STORAGE_KEY, gImages)
-}
-
+// Deliver Data
 function getMeme(imgId) {
     if (!gMeme) {
         const img = gImages.find(img => img.id === imgId)
@@ -31,118 +12,37 @@ function getMeme(imgId) {
     return gMeme
 }
 
-function getImageById(id) {
-    return gImages.find(img => img.id === id)
+function getLine(lineIdx) {
+    return gMeme.lines[lineIdx]
 }
 
-function _createImages() {
-    const images = []
-    gImagesUrls = getImageUrls()
-    gImagesUrls.forEach(url => images.push(_createImg(url)))
-    return images
+function getLinesCount() {
+    return gMeme.lines.length
 }
 
-function _createImg(url) {
-    return {
-        id: makeId(),
-        url,
-        keywords: _createKeyWords(url)
-    }
-}
-
-function getImageUrls() {
-    gImagesUrls = _loadDataFromStorage(IMG_URLS_STORAGE_KEY)
-    if (!gImagesUrls) gImagesUrls = _createImageUrls()
-    _saveDataToStorage(IMG_URLS_STORAGE_KEY, gImagesUrls)
-    return gImagesUrls
-}
-
-function _createKeyWords(url) {
-    const [, ...keyWords] = url.split('.').slice(1, -1) 
-
-    if (!gKeyWords) gKeyWords = keyWords
-    else {
-        const newkeyWords = keyWords.filter(keyWord => {
-            if (!gKeyWords.includes(keyWord)) return keyWord})
-            gKeyWords.push(...newkeyWords)
-        }
-        return keyWords
-}
-
-function  _createImageUrls() {
-    return [
-        './img/square/img1.dogs.babies.jpg',
-        './img/square/img2.cats.jpg',
-        './img/square/img3.dogs.jpg', 
-    ]
-}
-
-function _createMeme(img) {
-    return {
-        url: img.url,
-        imgId: img.id,
-        isSelected: false,
-        lines: _createMemeLines()
-    }
-}
-
-function setMemeText(txt, lineIdx) {
-    gMeme.lines[lineIdx].txt = txt
-    return gMeme
-}
-
-function _createMemeLines() {
-    gLinesId = 0
-    return [{
-        id: gLinesId,
-        imgSize: {x: 500, y: 500},
-        txt: 'Your Text',
-        txtSize: 50,
-        align: 'center',
-        stroke: 'black',
-        fill: 'white',
-        font: 'Impact' 
-    },
-    {
-        id: ++gLinesId,
-        imgSize: {x: 500, y: 500},
-        txt: 'Your Text',
-        txtSize: 50,
-        align: 'center',
-        stroke: 'black',
-        fill: 'white',
-        font: 'Impact'
-    }]
-}
-
-function addNewLine() {
-    const newLine = createNewLine()
-    console.log(newLine)
+function addLine() {
+    if (gMeme.lines.length === 3) return
+    const newLine = _createNewLine()
     gMeme.lines.push(newLine)
-    return gMeme
+    return newLine.id
 }
 
-function createNewLine() {
-    return {
-        id: ++gLinesId,
-        imgSize: {x: 500, y: 500},
-        txt: 'Your Text',
-        txtSize: 50,
-        align: 'center',
-        stroke: 'black',
-        fill: 'white', 
-        font: 'Impact'
-    }
+function getLineIsDrag() {
+    return gMeme.lines.find(line => line.isDrag === true)
 }
 
-function deleteLine(lineId) {
-    const line = gMeme.lines.findIndex(line => line.id === lineId)
-    gMeme.lines.splice(line, 1)
-    return gMeme
+// Update Data
+function updateLineText(newTxt, lineId) {
+    gMeme.lines[lineId].txt = newTxt
+}
+
+
+function deleteLine(lineIdx) {
+    const idx = gMeme.lines.findIndex((line, idx)=> idx === lineIdx)
+    gMeme.lines.splice(idx, 1)
 }
 
 function changeFontSize(val, lineId) {
-    console.log(gMeme)
     gMeme.lines[lineId].txtSize += +val
 }
 
@@ -160,6 +60,60 @@ function changeStrokeStyle(val, lineId) {
 
 function changeFillStyle(val, lineId) {
     gMeme.lines[lineId].fill = val
+}
+
+function setLineIsDrag(lineId) {
+    gMeme.lines[lineId].isDrag = true
+}
+
+function setLinesDragOff() {
+    gMeme.lines.forEach(line => line.isDrag = false)
+}
+
+
+// Internal services 
+function _createMeme(img) {
+    return {
+        img,
+        lines: _createMemeLines()
+    }
+}
+
+function _createMemeLines() {
+    return [{
+        id: 0,
+        txt: 'Your Text',
+        txtSize: 50,
+        align: 'center',
+        stroke: '#000000',
+        fill: '#ffffff',
+        font: 'Impact',
+        isDrag: false,
+    },
+    {
+        id: 1,
+        txt: 'Your Text',
+        txtSize: 50,
+        align: 'center',
+        stroke: '#000000',
+        fill: '#ffffff',
+        font: 'Impact',
+        isDrag: false,
+    }]
+}
+
+function _createNewLine() {
+    return {
+        id: 2,
+        imgSize: {x: 500, y: 500},
+        txt: 'Your Text',
+        txtSize: 50,
+        align: 'center',
+        stroke: '#000000',
+        fill: '#ffffff', 
+        font: 'Impact',
+        isDrag: false,
+    }
 }
 
 function _loadDataFromStorage(key) {

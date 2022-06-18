@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--clr1);
+    padding-top: 20px;
+    max-height: 100vh;
+}
+canvas {
+    outline: 3px solid;
+    border-radius: 20px;
+    max-width: 500px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+h3 {
+    font-family: poppins-medium;
+    font-size: 1rem;
+    color: var(--clr10)
+}
+
+img {
+    width: 100%;
+}
+
+footer {
+    margin:0;
+}
