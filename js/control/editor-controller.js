@@ -83,6 +83,10 @@ function onDownLoadCanvas(elLink) {
     elLink.download = 'Your Meme'
 }
 
+function onSaveMeme() {
+    saveCurrMeme()
+}
+
 
 
 

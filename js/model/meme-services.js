@@ -1,6 +1,9 @@
 'use strict'
 
+const MEMES_STORAGE_KEY = 'memeDB'
+
 var gMeme
+var gSaveMemes = []
 
 // Deliver Data
 function getMeme(imgId) {
@@ -8,6 +11,7 @@ function getMeme(imgId) {
         const img = getImageById(imgId)
         gMeme = _createMeme(img)
     }
+    // loadSavedMemes()
     return gMeme
 }
 
@@ -29,6 +33,21 @@ function getLineIsDrag() {
     return gMeme.lines.find(line => line.isDrag === true)
 }
 
+function generateRandomMeme() {
+    const randomImg = getRandomImg()
+    const numOfLines = getRandomIntInclusive(1, 3)
+    const lines = _createMemeLines(numOfLines)
+
+    lines.forEach(line => {
+        line.txt = getRandomTxtLine()
+        console.log(line.txt)
+        line.txtSize = getRandomIntInclusive(10, 50)
+        line.stroke = generateRandomColor()
+        line.fill = generateRandomColor()
+    })
+    gMeme = { img: randomImg, lines}
+    return gMeme
+}
 // Update Data
 function updateLineText(newTxt, lineId) {
     gMeme.lines[lineId].txt = newTxt
@@ -104,3 +123,23 @@ function _createNewLine() {
         isDrag: false,
     }
 }
+
+function saveCurrMeme() {
+    gSaveMemes.push(gMeme)
+    _saveDataToStorage(MEMES_STORAGE_KEY, gSaveMemes)
+    console.log(gSaveMemes)
+}
+
+function loadSavedMemes() {
+    gSaveMemes = _loadDataFromStorage(MEMES_STORAGE_KEY)
+    return gSaveMemes
+}
+
+function _loadDataFromStorage(key) {
+    loadFromStorage(key)
+}
+
+function _saveDataToStorage(key, data) {
+    saveToStorage(key, data)
+}
+

@@ -9,6 +9,43 @@ function makeId(length = 3) {
     return txt
 }
 
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
+}
+
+function generateRandomColor() {
+    var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16)
+    return randomColor
+}
+
+function getRandomTxtLine() {
+    const memesSentences = [
+    'I never eat falafel',
+    'DOMS DOMS EVERYWHERE',
+    'Stop Using i in for loops',
+    'Armed in knowledge',
+    'Js error "Unexpected String"',
+    'One does not simply write js',
+    'I`m a simple man',
+    'i see vanilla JS, i click like!',
+    'JS, HTML,CSS??',
+    'Even my momma can do that',
+    'May the force be with you',
+    'I know JS',
+    'JS Where everything is made up',
+    'and the rules dont matter',
+    'Not sure if im good at programming', 
+    'or good at googling',
+    'But if we could',
+    'JS what is this?',
+    'Write hello world', 
+    'add to cv 7 years experienced',
+    ]
+    return memesSentences[getRandomIntInclusive(0, memesSentences.length - 1)]
+}
+
 function  _createImageUrls() {
     return [
         './img/square/1.jpg',
@@ -55,4 +92,29 @@ function  _createImageUrls() {
         './img/various/024.jpg',
         './img/various/025.jpg',
     ]
+}
+
+function _getRandomKeyWords() {
+    const keyWordsBank = [
+        'Dogs',
+        'cats',
+        'Israel',
+        'Politics',
+        'Girls',
+        'Guys',
+        'Anime',
+        'WTF',
+        'Random',
+        'Animals',
+        'Awesom',
+        'Cosplay',
+        'Gaming',
+        'LOL',
+        'Savage',
+    ]
+    const keyWords = []
+    for (let i = 0; i < 4; i++) {
+        keyWords.push(keyWordsBank[getRandomIntInclusive(0, keyWordsBank.length - 1)])
+    }
+    return keyWords
 }

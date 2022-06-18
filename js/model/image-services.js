@@ -17,6 +17,16 @@ function getImageById(id) {
     return gImages.find(img => img.id === id)
 }
 
+function getRandomImg() {
+    const randomNum = getRandomIntInclusive(0, gImages.length)
+    return gImages[randomNum]
+}
+
+function getFilteredImages(val) {
+   // TODO
+   console.log('getting filterd images')
+}
+
 // Recieve data
 function setImgSizes(imgObjects) {
     imgObjects.forEach(imgObj => {
@@ -46,12 +56,11 @@ function _createImg(url) {
     return {
         id: makeId(),
         url,
-        keywords: '',
+        keywords: _getRandomKeyWords(),
         w: 0,
         h: 0
     }
 }
-
 
 function _loadDataFromStorage(key) {
     loadFromStorage(key)
