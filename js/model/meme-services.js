@@ -1,12 +1,11 @@
 'use strict'
 
-const MEME_STORAGE_KEY = 'memeDB'
 var gMeme
 
 // Deliver Data
 function getMeme(imgId) {
     if (!gMeme) {
-        const img = gImages.find(img => img.id === imgId)
+        const img = getImageById(imgId)
         gMeme = _createMeme(img)
     }
     return gMeme
@@ -105,12 +104,3 @@ function _createNewLine() {
         isDrag: false,
     }
 }
-
-function _loadDataFromStorage(key) {
-    loadFromStorage(key)
-}
-
-function _saveDataToStorage(key, data) {
-    saveToStorage(key, data)
-}
-

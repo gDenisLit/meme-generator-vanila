@@ -1,6 +1,5 @@
 'use strict'
 
-const IMG_STORAGE_KEY = 'imgDB'
 const IMG_URLS_STORAGE_KEY = 'imgUrlDB'
 const KEYWORDS_STORAGE_KEY = 'keywordsDB'
 
@@ -10,9 +9,7 @@ var gKeyWordSearchCountMap
 
 // Deliver Data
 function getImages() {
-    gImages = _loadDataFromStorage(IMG_STORAGE_KEY)
     if (!gImages) gImages = _createImages()
-    _saveDataToStorage(IMG_STORAGE_KEY)
     return gImages
 }
 
