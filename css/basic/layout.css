@@ -1,9 +1,16 @@
 .main-layout {
-    max-width: 1024px;
     margin: 0 auto;
 }
 
 .main-content {
     max-height: 100%;
     margin-block-end: 1rem;
+}
+
+.main-container {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
 }

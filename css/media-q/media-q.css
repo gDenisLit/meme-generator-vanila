@@ -1,0 +1,133 @@
+@media (min-width: 360px) {
+    .main-layout {
+        max-width: 100%;
+    }
+
+    .main-header {
+        padding: 1rem;
+    }
+      
+    .meme-gallery .meme-filter {
+        margin-block-end: 10px;
+        flex-direction: column;
+    }
+    
+    .meme-gallery .search {
+        width: 100%;
+        margin-block-end: 0.5rem;
+    }
+
+    .meme-gallery .meme-filter .filter {
+        display: flex;
+    }
+
+    .meme-gallery .meme-filter .key-words {
+        margin-inline-end: 0.5rem;
+        width: 100%;
+    }
+    
+    .images-wrapper { 
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+
+    .gallery-item {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+}
+
+@media (min-width: 600px) {
+    .main-layout {
+        max-width: 590px;
+    }
+
+    .logo {
+        margin-inline-start: 2rem;
+    }
+
+    .main-header .page-nav {
+        margin-inline-end: 50px;
+    }
+
+    .images-wrapper { 
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+    }
+}
+
+@media (min-width: 800px) {
+    .main-container {
+        padding-top: 20px
+    }
+
+    .main-layout {
+        max-width: 780px;
+    }
+
+    .logo {
+        margin-inline-start: 3rem;
+    }
+
+    .main-header {
+        padding: 1.2rem;
+        border-radius: 40px;
+        margin-bottom: 1rem;
+    }
+
+    .main-header .page-nav {
+        margin-inline-end: 100px;
+    }
+
+    .meme-gallery {
+        border-radius: 10px;
+    }
+    
+    .meme-gallery .meme-filter {
+        margin-block-end: 10px;
+        flex-direction: row;
+    }
+
+    .meme-gallery .search {
+        margin-block-end: 0.5rem;
+        margin-inline-end: 0.5rem;
+        height: 56px;
+    }
+
+    .meme-gallery .meme-filter .key-words {
+        width: 300px;
+        height: 56px;
+    }
+
+    .meme-filter .more {
+        width: 150px;
+        max-height: 56px;
+    }
+
+    .images-wrapper { 
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .main-layout {
+        max-width: 1024px;
+    }
+
+    .logo {
+        margin-inline-start: 5rem;
+    }
+    
+    .main-header .page-nav {
+        margin-inline-end: 220px;
+    }
+
+    .images-wrapper { 
+        grid-template-columns: repeat(5, 1fr);
+        grid-auto-rows: 1fr;
+        gap: 20px;
+    }
+}

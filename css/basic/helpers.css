@@ -12,15 +12,15 @@
     flex-direction: column;
 }
 
-.flex .content-center {
+.content-center {
     justify-content: center;
 }
 
-.flex .items-center {
+.items-center {
     align-items: center;
 }
 
-.flex .space-between {
+.space-between {
     justify-content: space-between;
 }
 

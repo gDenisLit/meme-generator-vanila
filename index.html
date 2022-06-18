@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="./css/style.css" class="stylesheet">
 <title>Ultimate Meme Generator</title>
 </head>
-<body onload="initGallery()" class="flex">
+<body onload="initGallery()" >
 
     <div class="main-container main-layout flex-column content-center items-center">
 
-        <header class="main-header flex-row space-between ">
+        <header class="main-header flex-row space-between">
                 <h1 class="logo">mem</h1>
-            <ul class="page-nav clean-list flex-row items-center">
+            <ul class="page-nav clean-list flex-row">
                 <li><a href="./index.html">Gallery</a></li>
                 <li><a href="#">About</a></li>
             </ul>
@@ -23,8 +23,10 @@
             <section class="meme-gallery main-layout">
                     <div class="meme-filter flex-row space-between">
                         <input type="text" class="search" placeholder="Search">
-                        <div class="key-words"></div>
-                        <button class="more">More</button>
+                        <div class="filter">
+                            <div class="key-words"></div>
+                            <button class="more">More</button>
+                        </div>
                     </div>
                     <div class="images images-wrapper">div>
             </section>

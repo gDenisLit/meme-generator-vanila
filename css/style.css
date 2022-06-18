@@ -12,6 +12,8 @@
 @import './components/meme-gallery.css';
 @import './components/meme-editor.css';
 
+/* -----MEDIA QUERIES---- */
+@import './media-q/media-q.css';
 
 
 
