@@ -20,27 +20,29 @@ function drawImageOnCanvas(img, ctx) {
 function drawLinesOnCanvas(lines, ctx, editMode) {
     const linesPos = []
     lines.forEach((line, idx) => {
-        const { txt, txtSize, align, stroke, fill, font, id } = line
+        const { txt, txtSize, align, stroke, fill, font, id, isShown } = line
 
-        ctx.font = `${txtSize}px ${font}`
-        ctx.textAlign = align
-        ctx.textBaseline = 'top'
-        ctx.lineWidth = txtSize / 15
-
-        const { x, y } = getLinePos(id, align)
-        // console.log(x, y)
-        // console.log(align)
-        const { w } = getCanvasSize()
-        linesPos.push({ x, y, align, txt, txtSize, id })
-
-        ctx.setLineDash([0])
-        ctx.strokeStyle = stroke
-        ctx.strokeText(txt, x, y, w)
-        ctx.fillStyle = fill
-        ctx.fillText(txt, x, y, w)
-
-        if (idx === gCurrLineIdx && editMode) {
-            drawTextBoxOutline(txtSize, y, ctx)
+        if (isShown) {
+            ctx.font = `${txtSize}px ${font}`
+            ctx.textAlign = align
+            ctx.textBaseline = 'top'
+            ctx.lineWidth = txtSize / 15
+    
+            const { x, y } = getLinePos(id, align)
+            // console.log(x, y)
+            // console.log(align)
+            const { w } = getCanvasSize()
+            linesPos.push({ x, y, align, txt, txtSize, id })
+    
+            ctx.setLineDash([0])
+            ctx.strokeStyle = stroke
+            ctx.strokeText(txt, x, y, w)
+            ctx.fillStyle = fill
+            ctx.fillText(txt, x, y, w)
+    
+            if (idx === gCurrLineIdx && editMode) {
+                drawTextBoxOutline(txtSize, y, ctx)
+            }
         }
     })
     gLinesPos = linesPos
@@ -48,11 +50,8 @@ function drawLinesOnCanvas(lines, ctx, editMode) {
 
 function getLinePos(lineId, align) {
     const line = gLinesPos.find(line => line.id === lineId)
-    if (line) {
-        console.log('already have a pos')
-        return line
-    }
-
+    if (line) return line
+    
     const { w, h } = getCanvasSize()
     let x, y
 
@@ -126,6 +125,8 @@ function resetCanvasAlign(currLineIdx, align) {
 }
 
 function getCurrLineIdx() {
+    console.log('getting curr line')
+    console.log(gCurrLineIdx)
     return gCurrLineIdx
 }
 

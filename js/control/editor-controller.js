@@ -19,7 +19,10 @@ function onTextInput(val) {
 function onSwichLines(lineId) {
     const totalLineCount = getLinesCount()
     switchCurrLine(totalLineCount, lineId)
-
+    if (!totalLineCount) {
+        updateCanvas()
+        return
+    }
     const currLineIdx = getCurrLineIdx()
     const {txt, font, stroke, fill} = getLine(currLineIdx)
 

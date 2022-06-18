@@ -21,7 +21,6 @@ function getLinesCount() {
 }
 
 function addLine() {
-    if (gMeme.lines.length === 3) return
     const newLine = _createNewLine()
     gMeme.lines.push(newLine)
     return newLine.id
@@ -35,7 +34,6 @@ function getLineIsDrag() {
 function updateLineText(newTxt, lineId) {
     gMeme.lines[lineId].txt = newTxt
 }
-
 
 function deleteLine(lineIdx) {
     const idx = gMeme.lines.findIndex((line, idx)=> idx === lineIdx)
@@ -75,37 +73,32 @@ function setLinesDragOff() {
 function _createMeme(img) {
     return {
         img,
-        lines: _createMemeLines()
+        lines: _createMemeLines(2)
     }
 }
 
-function _createMemeLines() {
-    return [{
-        id: 0,
-        txt: 'Your Text',
-        txtSize: 50,
-        align: 'center',
-        stroke: '#000000',
-        fill: '#ffffff',
-        font: 'Impact',
-        isDrag: false,
-    },
-    {
-        id: 1,
-        txt: 'Your Text',
-        txtSize: 50,
-        align: 'center',
-        stroke: '#000000',
-        fill: '#ffffff',
-        font: 'Impact',
-        isDrag: false,
-    }]
+function _createMemeLines(numOfLines) {
+    const lines = []
+    for (let i = 0; i < numOfLines; i++) {
+        lines.push({
+            id: i,
+            txt: 'Your Text',
+            txtSize: 50,
+            align: 'center',
+            stroke: '#000000',
+            fill: '#ffffff',
+            font: 'Impact',
+            isDrag: false,
+            isShown: true,
+        })
+    }
+    return lines
 }
 
 function _createNewLine() {
+    // const lines = gMeme.lines
     return {
-        id: 2,
-        imgSize: {x: 500, y: 500},
+        id: gMeme.lines.length,
         txt: 'Your Text',
         txtSize: 50,
         align: 'center',
@@ -113,6 +106,7 @@ function _createNewLine() {
         fill: '#ffffff', 
         font: 'Impact',
         isDrag: false,
+        isShown: true,
     }
 }
 
