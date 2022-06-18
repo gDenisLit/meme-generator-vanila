@@ -12,8 +12,8 @@ function getMeme(imgId) {
     return gMeme
 }
 
-function getLine(lineIdx) {
-    return gMeme.lines[lineIdx]
+function getLine(lineId) {
+    return gMeme.lines[lineId]
 }
 
 function getLinesCount() {
@@ -35,8 +35,8 @@ function updateLineText(newTxt, lineId) {
     gMeme.lines[lineId].txt = newTxt
 }
 
-function deleteLine(lineIdx) {
-    const idx = gMeme.lines.findIndex((line, idx)=> idx === lineIdx)
+function deleteLine(lineId) {
+    const idx = gMeme.lines.findIndex((line, idx)=> idx === lineId)
     gMeme.lines.splice(idx, 1)
 }
 
@@ -68,7 +68,6 @@ function setLinesDragOff() {
     gMeme.lines.forEach(line => line.isDrag = false)
 }
 
-
 // Internal services 
 function _createMeme(img) {
     return {
@@ -89,14 +88,12 @@ function _createMemeLines(numOfLines) {
             fill: '#ffffff',
             font: 'Impact',
             isDrag: false,
-            isShown: true,
         })
     }
     return lines
 }
 
 function _createNewLine() {
-    // const lines = gMeme.lines
     return {
         id: gMeme.lines.length,
         txt: 'Your Text',
@@ -106,7 +103,6 @@ function _createNewLine() {
         fill: '#ffffff', 
         font: 'Impact',
         isDrag: false,
-        isShown: true,
     }
 }
 

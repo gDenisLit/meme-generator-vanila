@@ -11,8 +11,8 @@ function updateCanvas() {
 }
 
 function onTextInput(val) {
-    const currLineIdx = getCurrLineIdx()
-    updateLineText(val, currLineIdx)
+    const currLineId = getCurrLineId()
+    updateLineText(val, currLineId)
     updateCanvas()
 }
 
@@ -23,8 +23,8 @@ function onSwichLines(lineId) {
         updateCanvas()
         return
     }
-    const currLineIdx = getCurrLineIdx()
-    const {txt, font, stroke, fill} = getLine(currLineIdx)
+    const currLineId = getCurrLineId()
+    const {txt, font, stroke, fill} = getLine(currLineId)
 
     updateTextArea(txt)
     updateFontPicker(font)
@@ -39,39 +39,39 @@ function onAddLine() {
 }
 
 function onDeleteLine() {
-    const currLineIdx = getCurrLineIdx()
-    deleteLine(currLineIdx)
+    const currLineId = getCurrLineId()
+    deleteLine(currLineId)
     onSwichLines()
 }
 
 function onSizeChange(val) {
-    const currLineIdx = getCurrLineIdx()
-    changeFontSize(val, currLineIdx)
+    const currLineId = getCurrLineId()
+    changeFontSize(val, currLineId)
     updateCanvas()
 }
 
 function onAlignChange(val) {
-    const currLineIdx = getCurrLineIdx()
-    resetCanvasAlign(currLineIdx, val)
-    changeTextAlign(val, currLineIdx)
+    const currLineId = getCurrLineId()
+    resetCanvasAlign(currLineId, val)
+    changeTextAlign(val, currLineId)
     updateCanvas()
 }
 
 function onFontChange(val) {
-    const currLineIdx = getCurrLineIdx()
-    changeTextFont(val, currLineIdx)
+    const currLineId = getCurrLineId()
+    changeTextFont(val, currLineId)
     updateCanvas()
 }
 
 function onStrokeChange(val) {
-    const currLineIdx = getCurrLineIdx()
-    changeStrokeStyle(val, currLineIdx)
+    const currLineId = getCurrLineId()
+    changeStrokeStyle(val, currLineId)
     updateCanvas()
 }
 
 function onFillChange(val) {
-    const currLineIdx = getCurrLineIdx()
-    changeFillStyle(val, currLineIdx)
+    const currLineId = getCurrLineId()
+    changeFillStyle(val, currLineId)
     updateCanvas()
 }
 

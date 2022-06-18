@@ -1,6 +1,6 @@
 'use strict'
 
-var gCurrLineIdx = 0
+var gCurrLineId = 0
 var gLinesPos = []
 
 function clearCanvas(ctx) {
@@ -20,30 +20,29 @@ function drawImageOnCanvas(img, ctx) {
 function drawLinesOnCanvas(lines, ctx, editMode) {
     const linesPos = []
     lines.forEach((line, idx) => {
-        const { txt, txtSize, align, stroke, fill, font, id, isShown } = line
+        const { txt, txtSize, align, stroke, fill, font, id, } = line
 
-        if (isShown) {
-            ctx.font = `${txtSize}px ${font}`
-            ctx.textAlign = align
-            ctx.textBaseline = 'top'
-            ctx.lineWidth = txtSize / 15
-    
-            const { x, y } = getLinePos(id, align)
-            // console.log(x, y)
-            // console.log(align)
-            const { w } = getCanvasSize()
-            linesPos.push({ x, y, align, txt, txtSize, id })
-    
-            ctx.setLineDash([0])
-            ctx.strokeStyle = stroke
-            ctx.strokeText(txt, x, y, w)
-            ctx.fillStyle = fill
-            ctx.fillText(txt, x, y, w)
-    
-            if (idx === gCurrLineIdx && editMode) {
-                drawTextBoxOutline(txtSize, y, ctx)
-            }
+        ctx.font = `${txtSize}px ${font}`
+        ctx.textAlign = align
+        ctx.textBaseline = 'top'
+        ctx.lineWidth = txtSize / 15
+
+        const { x, y } = getLinePos(id, align)
+        // console.log(x, y)
+        // console.log(align)
+        const { w } = getCanvasSize()
+        linesPos.push({ x, y, align, txt, txtSize, id })
+
+        ctx.setLineDash([0])
+        ctx.strokeStyle = stroke
+        ctx.strokeText(txt, x, y, w)
+        ctx.fillStyle = fill
+        ctx.fillText(txt, x, y, w)
+
+        if (idx === gCurrLineId && editMode) {
+            drawTextBoxOutline(txtSize, y, ctx)
         }
+    
     })
     gLinesPos = linesPos
 }
@@ -104,15 +103,15 @@ function drawTextBoxOutline(txtSize, txtY, ctx) {
 
 function switchCurrLine(linesCount, lineId) {
     if (lineId !== undefined) {
-        gCurrLineIdx = lineId
+        gCurrLineId = lineId
         return
     }
-    if (gCurrLineIdx < linesCount - 1) gCurrLineIdx++
-    else if (gCurrLineIdx >= linesCount - 1) gCurrLineIdx = 0
+    if (gCurrLineId < linesCount - 1) gCurrLineId++
+    else if (gCurrLineId >= linesCount - 1) gCurrLineId = 0
     
 }
 
-function resetCanvasAlign(currLineIdx, align) {
+function resetCanvasAlign(currLineId, align) {
     const { w } = getCanvasSize()
     
     let x
@@ -120,14 +119,12 @@ function resetCanvasAlign(currLineIdx, align) {
     else if (align === 'end') x = w * 0.9
     else x = w * 0.5
     
-    gLinesPos[currLineIdx].x = x
-    gLinesPos[currLineIdx].align = align
+    gLinesPos[currLineId].x = x
+    gLinesPos[currLineId].align = align
 }
 
-function getCurrLineIdx() {
-    console.log('getting curr line')
-    console.log(gCurrLineIdx)
-    return gCurrLineIdx
+function getCurrLineId() {
+    return gCurrLineId
 }
 
 function moveLine(lineId, dx, dy) {
