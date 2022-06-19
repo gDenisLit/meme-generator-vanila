@@ -65,6 +65,7 @@ function addTouchListeners() {
 function onDown(ev) {
     const pos = getEvPos(ev)
     const selectedText = isTextSelected(pos, gCtx)
+    console.log(pos)
     if (!selectedText) return
 
     onSwichLines(selectedText.id)
@@ -96,10 +97,11 @@ function getEvPos(ev) {
     }
     if (gTouchEvs.includes(ev.type)) {
         ev.preventDefault()
+        console.log('touch')
         ev = ev.changedTouches[0]
         pos = {
-            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+            clickX: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            clickY: ev.pageY - ev.target.offsetTop - ev.target.clientTop
         }
     }
     return pos
