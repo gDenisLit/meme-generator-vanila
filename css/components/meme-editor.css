@@ -2,10 +2,6 @@
     display: none;
 }
 
-.canvas-container {
-    margin-inline-end: 20px;
-}
-
 .editor {
     background-color: var(--clr11);
     border-radius: 20px;
@@ -13,7 +9,6 @@
 }
 
 .editor .txt-edit {
-    width: 445px;
     max-height: 80px;
     padding-top: 1.5rem;
     margin-block-end: 1rem;
@@ -30,27 +25,6 @@
 .crud {
     width: 50%;
     margin-block-end: 1rem;
-}
-
-.text-manipulation {
-    background-color: var(--clr15);
-    border-radius: 15px;
-    padding: 17px;
-    margin-block-end: 1rem;
-
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 5px;
-    grid-auto-flow: row;
-}
-
-.txt-font {
-    grid-area: 2 / span 3 ;
-    width: 236px;
-    border-radius: 15px;
-    text-align: center;
-    max-height: 50px;
 }
 
 input[type="color"] {
@@ -109,3 +83,12 @@ input[type="color"] {
 .save-meme {
     background-color: rgb(28, 222, 74);
 }
+
+.txt-font {
+    grid-area: 1 / span 3 ;
+    width: 236px;
+    border-radius: 15px;
+    text-align: center;
+    max-height: 50px;
+}
+

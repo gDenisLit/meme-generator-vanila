@@ -29,6 +29,12 @@ function setCanvasSize(meme) {
     gCanvas.height = h
 }
 
+function resizeCanvas() {
+    const elContainer = getElCanvasContainer()
+    gCanvas.width = elContainer.offsetWidth
+    gCanvas.height = elContainer.offsetHeight
+}
+
 function getCanvasSize() {
     return {
         w: gCanvas.width,
@@ -38,28 +44,6 @@ function getCanvasSize() {
 
 function getDataUrl() {
     return gCanvas.toDataURL()
-}
-
-function addListeners() {
-    addMouseListeners()
-    addTouchListeners()
-    // //Listen for resize ev 
-    // window.addEventListener('resize', () => {
-    //     resizeCanvas()
-    //     renderCanvas()
-    // })
-}
-
-function addMouseListeners() {
-    gCanvas.addEventListener('mousemove', onMove)
-    gCanvas.addEventListener('mousedown', onDown)
-    gCanvas.addEventListener('mouseup', onUp)
-}
-
-function addTouchListeners() {
-    gCanvas.addEventListener('touchmove', onMove)
-    gCanvas.addEventListener('touchstart', onDown)
-    gCanvas.addEventListener('touchend', onUp)
 }
 
 function onDown(ev) {
@@ -107,3 +91,19 @@ function getEvPos(ev) {
     return pos
 }
 
+function addListeners() {
+    addMouseListeners()
+    addTouchListeners()
+}
+
+function addMouseListeners() {
+    gCanvas.addEventListener('mousemove', onMove)
+    gCanvas.addEventListener('mousedown', onDown)
+    gCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gCanvas.addEventListener('touchmove', onMove)
+    gCanvas.addEventListener('touchstart', onDown)
+    gCanvas.addEventListener('touchend', onUp)
+}

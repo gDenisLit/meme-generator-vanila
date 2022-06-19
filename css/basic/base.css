@@ -11,7 +11,8 @@ body {
 canvas {
     outline: 3px solid;
     border-radius: 20px;
-    max-width: 500px;
+    width: 350px;
+    height: 350px;
 }
 
 a {

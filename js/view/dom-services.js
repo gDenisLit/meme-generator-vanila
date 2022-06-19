@@ -45,3 +45,7 @@ function getImgSize(imgId) {
         h: elImg.naturalHeight
     }
 }
+
+function getElCanvasContainer() {
+    return document.querySelector('.canvas-container')
+}
