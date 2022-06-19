@@ -3,7 +3,6 @@
 function initGallery() {
     const images = getImages()
     renderGallry(images)
-    // calcImgSizes()
 }
 
 function calcImgSizes() {

@@ -13,19 +13,6 @@ function renderGallry(images) {
     document.querySelector('.images-wrapper').innerHTML = strHtml
 }
 
-// function getElImgObjects() {
-//     const elImgs = document.querySelectorAll('img')
-//     const imgObjects = []
-//     elImgs.forEach(elImg => {
-//         imgObjects.push({
-//             id: elImg.id,
-//             w: elImg.naturalWidth,
-//             h: elImg.naturalHeight
-//         })
-//     })
-//     return imgObjects
-// }
-
 function renderMemeEditor() {
     document.querySelector('.meme-gallery').style.display = 'none'
     document.querySelector('.meme-editor').style.display = 'flex'

@@ -1,5 +1,7 @@
 'use strict'
 
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
+
 var gCanvas
 var gCtx
 var gStartPos
@@ -40,7 +42,7 @@ function getDataUrl() {
 
 function addListeners() {
     addMouseListeners()
-    // addTouchListeners()
+    addTouchListeners()
     // //Listen for resize ev 
     // window.addEventListener('resize', () => {
     //     resizeCanvas()
@@ -54,11 +56,11 @@ function addMouseListeners() {
     gCanvas.addEventListener('mouseup', onUp)
 }
 
-// function addTouchListeners() {
-//     gCanvas.addEventListener('touchmove', onMove)
-//     gCanvas.addEventListener('touchstart', onDown)
-//     gCanvas.addEventListener('touchend', onUp)
-// }
+function addTouchListeners() {
+    gCanvas.addEventListener('touchmove', onMove)
+    gCanvas.addEventListener('touchstart', onDown)
+    gCanvas.addEventListener('touchend', onUp)
+}
 
 function onDown(ev) {
     const pos = getEvPos(ev)
@@ -92,18 +94,14 @@ function getEvPos(ev) {
         clickX: ev.offsetX,
         clickY: ev.offsetY
     }
-    // Check if its a touch ev
-    // if (gTouchEvs.includes(ev.type)) {
-    //     //soo we will not trigger the mouse ev
-    //     ev.preventDefault()
-    //     //Gets the first touch point
-    //     ev = ev.changedTouches[0]
-    //     //Calc the right pos according to the touch screen
-    //     pos = {
-    //         x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
-    //         y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
-    //     }
-    // }
+    if (gTouchEvs.includes(ev.type)) {
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+        }
+    }
     return pos
 }
 
