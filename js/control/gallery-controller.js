@@ -3,7 +3,7 @@
 function initGallery() {
     const images = getImages()
     renderGallry(images)
-    calcImgSizes()
+    // calcImgSizes()
 }
 
 function calcImgSizes() {
@@ -18,7 +18,6 @@ function onImageSelect(imgId) {
 
 function onShowSavedMemes() {
     console.log('showing saving memes...')
-
 }
 
 function onGenerateRandomMem() {

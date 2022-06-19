@@ -22,7 +22,7 @@ function renderMeme(meme, editMode=1) {
 }
 
 function setCanvasSize(meme) {
-    const {w, h} = meme.img
+    const {w, h} = getImgSize(meme.img.id)
     gCanvas.width = w
     gCanvas.height = h
 }
@@ -75,7 +75,6 @@ function onMove(ev) {
     if (!line) return
 
     const pos = getEvPos(ev)
-
     const dx = pos.clickX - gStartPos.clickX
     const dy = pos.clickY - gStartPos.clickY
 
@@ -107,26 +106,4 @@ function getEvPos(ev) {
     // }
     return pos
 }
-
-// function isBoxClicked(clickedPos) {
-//     let clickedBox
-//     const linesPos = setLinesPos()
-//     const boxes = getBoxes()
-//     boxes.forEach((box, idx) => {
-
-//         const {w, h} = box
-//         const {x, y} = linesPos[idx]
-//         const maxDisFromX = w /2
-//         const maxDisFromY = h / 2
-//         const distanceFromX = Math.abs(x - clickedPos.x)
-//         const distanceFromY = Math.abs(y - clickedPos.y)
-
-//         if (distanceFromX < maxDisFromX && 
-//             distanceFromY < maxDisFromY) {
-//             clickedBox = boxes[idx]
-//         }
-//     })
-//     return clickedBox
-// }
-
 

@@ -28,8 +28,6 @@ function drawLinesOnCanvas(lines, ctx, editMode) {
         ctx.lineWidth = txtSize / 15
 
         const { x, y } = getLinePos(id, align)
-        // console.log(x, y)
-        // console.log(align)
         const { w } = getCanvasSize()
         linesPos.push({ x, y, align, txt, txtSize, id })
 
@@ -42,7 +40,6 @@ function drawLinesOnCanvas(lines, ctx, editMode) {
         if (idx === gCurrLineId && editMode) {
             drawTextBoxOutline(txtSize, y, ctx)
         }
-    
     })
     gLinesPos = linesPos
 }
@@ -86,7 +83,6 @@ function isTextSelected(pos, ctx) {
     })
     return selectedText
 }
-
 
 function drawTextBoxOutline(txtSize, txtY, ctx) {
     const { w } = getCanvasSize()
