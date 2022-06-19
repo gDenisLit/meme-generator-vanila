@@ -48,34 +48,16 @@ function generateRandomMeme() {
     gMeme = { img: randomImg, lines}
     return gMeme
 }
+
 // Update Data
-function updateLineText(newTxt, lineId) {
-    gMeme.lines[lineId].txt = newTxt
+function updateLinesProp(val, lineId, key) {
+    if (key === 'txtSize') gMeme.lines[lineId][key] += +val
+    else gMeme.lines[lineId][key] = val
 }
 
 function deleteLine(lineId) {
     const idx = gMeme.lines.findIndex((line, idx)=> idx === lineId)
     gMeme.lines.splice(idx, 1)
-}
-
-function changeFontSize(val, lineId) {
-    gMeme.lines[lineId].txtSize += +val
-}
-
-function changeTextAlign(val, lineId) {
-    gMeme.lines[lineId].align = val
-}
-
-function changeTextFont(val, lineId) {
-    gMeme.lines[lineId].font = val
-}
-
-function changeStrokeStyle(val, lineId) {
-    gMeme.lines[lineId].stroke = val
-}
-
-function changeFillStyle(val, lineId) {
-    gMeme.lines[lineId].fill = val
 }
 
 function setLineIsDrag(lineId) {
@@ -124,7 +106,7 @@ function _createNewLine() {
     }
 }
 
-function saveCurrMeme() {
+function _saveCurrMeme() {
     gSaveMemes.push(gMeme)
     _saveDataToStorage(MEMES_STORAGE_KEY, gSaveMemes)
     console.log(gSaveMemes)

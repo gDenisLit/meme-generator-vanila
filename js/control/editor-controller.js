@@ -12,7 +12,7 @@ function updateCanvas() {
 
 function onTextInput(val) {
     const currLineId = getCurrLineId()
-    updateLineText(val, currLineId)
+    updateLinesProp(val, currLineId, 'txt')
     updateCanvas()
 }
 
@@ -46,32 +46,32 @@ function onDeleteLine() {
 
 function onSizeChange(val) {
     const currLineId = getCurrLineId()
-    changeFontSize(val, currLineId)
+    updateLinesProp(val, currLineId, 'txtSize')
     updateCanvas()
 }
 
 function onAlignChange(val) {
     const currLineId = getCurrLineId()
     resetCanvasAlign(currLineId, val)
-    changeTextAlign(val, currLineId)
+    updateLinesProp(val, currLineId, 'align')
     updateCanvas()
 }
 
 function onFontChange(val) {
     const currLineId = getCurrLineId()
-    changeTextFont(val, currLineId)
+    updateLinesProp(val, currLineId, 'font')
     updateCanvas()
 }
 
 function onStrokeChange(val) {
     const currLineId = getCurrLineId()
-    changeStrokeStyle(val, currLineId)
+    updateLinesProp(val, currLineId, 'stroke')
     updateCanvas()
 }
 
 function onFillChange(val) {
     const currLineId = getCurrLineId()
-    changeFillStyle(val, currLineId)
+    updateLinesProp(val, currLineId, 'fill')
     updateCanvas()
 }
 
@@ -84,7 +84,7 @@ function onDownLoadCanvas(elLink) {
 }
 
 function onSaveMeme() {
-    saveCurrMeme()
+    _saveCurrMeme()
 }
 
 
