@@ -1,8 +1,4 @@
 @media (min-width: 200px) {
-    .main-layout {
-        /* width: 90vw; */
-    }
-
     .main-header {
         padding: 0.5rem;
     }
@@ -81,7 +77,7 @@
     }
 
     .meme-filter .more {
-        width: 150px;
+        width: 80px;
         max-height: 56px;
     }
 
