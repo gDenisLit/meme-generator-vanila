@@ -104,6 +104,10 @@
         justify-items: center;
     }
 
+    .txt-editor {
+        font-size: 0.7rem;
+    }
+
     .add-line {
         margin: 0 5px 0;    
     }
@@ -226,6 +230,11 @@
 
     .export {
         font-size: 1.3rem
+    }
+
+    
+    .txt-editor {
+        font-size: 1.5625rem;
     }
 }
 
