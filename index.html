@@ -49,20 +49,20 @@
                 </div>
                 
 
-                <div class="editor flex-column space-between items-center >
+                <div class="editor flex-column space-between items-center">
                     <textarea class="txt-edit" placeholder="Your Text" oninput="onTextInput(this.value)"></textarea>
                     <div class="crud flex-row space-around">
-                        <button class="btn" onclick="onSwichLines()">↑↓</button>
-                        <button class="btn" onclick="onAddLine()">+</button>
-                        <button class="btn" onclick="onDeleteLine()">del</button>
+                        <button class="editor-btn" onclick="onSwichLines()">↑↓</button>
+                        <button class="editor-btn add-line" onclick="onAddLine()">+</button>
+                        <button class="editor-btn" onclick="onDeleteLine()">del</button>
                     </div>
 
                     <div class="text-manipulation">
-                        <button class="btn" value="1" onclick="onSizeChange(this.value)">A<span>+</span></button>
-                        <button class="btn" value="-1" onclick="onSizeChange(this.value)">A<span>-</span></button>
-                        <button class="btn" value="start" onclick="onAlignChange(this.value)">ltr</button>
-                        <button class="btn" value="center" onclick="onAlignChange(this.value)">mid</button>
-                        <button class="btn" value="end" onclick="onAlignChange(this.value)">rtl</button>
+                        <button class="editor-btn" value="1" onclick="onSizeChange(this.value)">A<span>+</span></button>
+                        <button class="editor-btn" value="-1" onclick="onSizeChange(this.value)">A<span>-</span></button>
+                        <button class="editor-btn" value="start" onclick="onAlignChange(this.value)">ltr</button>
+                        <button class="editor-btn" value="center" onclick="onAlignChange(this.value)">mid</button>
+                        <button class="editor-btn" value="end" onclick="onAlignChange(this.value)">rtl</button>
                         
                         <select name="font" id="font" class="txt-font" onchange="onFontChange(this.value)">
                             <option value="Impact">Impact</option>
@@ -73,8 +73,8 @@
                             <option value="Serif">Serif</option>
                         </select>
                         
-                        <input type="color" class="txt-storke color btn" value="#000000" oninput="onStrokeChange(this.value)">
-                        <input type="color" class="txt-fill color btn" value="#ffffff" oninput="onFillChange(this.value)">
+                        <input type="color" class="txt-storke color" value="#000000" oninput="onStrokeChange(this.value)">
+                        <input type="color" class="txt-fill color" value="#ffffff" oninput="onFillChange(this.value)">
                     </div>
                     
                     <div class="meme-export">

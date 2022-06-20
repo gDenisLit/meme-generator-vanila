@@ -28,6 +28,17 @@
     margin-block-end: 1rem;
 }
 
+.editor-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+}
+
+.editor-btn:active {
+    box-shadow: 0px 0px 1px 2px #000 inset;
+}
+
 input[type="color"] {
     appearance: none;
     -moz-appearance: none;
