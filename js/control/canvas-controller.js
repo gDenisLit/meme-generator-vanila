@@ -49,7 +49,6 @@ function getDataUrl() {
 function onDown(ev) {
     const pos = getEvPos(ev)
     const selectedText = isTextSelected(pos, gCtx)
-    console.log(pos)
     if (!selectedText) return
 
     onSwichLines(selectedText.id)

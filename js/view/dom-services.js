@@ -18,20 +18,12 @@ function renderMemeEditor() {
     document.querySelector('.meme-editor').style.display = 'flex'
 }
 
-function updateTextArea(txt) {
+function updateEditorInputs(line) {
+    const {txt, font, stroke, fill} = line
     document.querySelector('.txt-edit').value = txt
-}
-
-function updateFontPicker(font) {
     document.querySelector('.txt-font').value = font
-}
-
-function updateStrokePicker(color) {
-    document.querySelector('.txt-storke').value = color
-}
-
-function updateFillPicker(color) {
-    document.querySelector('.txt-fill').value = color
+    document.querySelector('.txt-storke').value = stroke
+    document.querySelector('.txt-fill').value = fill
 }
 
 function getElCanvas() {

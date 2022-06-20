@@ -24,12 +24,7 @@ function onSwichLines(lineId) {
         return
     }
     const currLineId = getCurrLineId()
-    const {txt, font, stroke, fill} = getLine(currLineId)
-
-    updateTextArea(txt)
-    updateFontPicker(font)
-    updateStrokePicker(stroke)
-    updateFillPicker(fill)
+    updateEditorInputs(getLine(currLineId))
     updateCanvas()
 }
 
