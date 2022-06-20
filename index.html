@@ -43,15 +43,15 @@
                     <div class="images images-wrapper">div>
             </section>
             
-            <section class="meme-editor main-layout space-between"> 
+            <section class="meme-editor main-layout space-between content-center items-center"> 
                 <div class="canvas-container">
                     <canvas class="meme-canvas"></canvas>
                 </div>
                 
 
-                <div class="editor flex-column space-between items-center">
+                <div class="editor flex-column space-between items-center >
                     <textarea class="txt-edit" placeholder="Your Text" oninput="onTextInput(this.value)"></textarea>
-                    <div class="crud flex-row space-between">
+                    <div class="crud flex-row space-around">
                         <button class="btn" onclick="onSwichLines()">↑↓</button>
                         <button class="btn" onclick="onAddLine()">+</button>
                         <button class="btn" onclick="onDeleteLine()">del</button>

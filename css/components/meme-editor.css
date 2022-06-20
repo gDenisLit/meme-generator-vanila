@@ -6,6 +6,7 @@
     background-color: var(--clr11);
     border-radius: 20px;
     padding: 1rem;
+    max-width: 80%;
 }
 
 .editor .txt-edit {
