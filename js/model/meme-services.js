@@ -40,7 +40,6 @@ function generateRandomMeme() {
 
     lines.forEach(line => {
         line.txt = getRandomTxtLine()
-        console.log(line.txt)
         line.txtSize = getRandomIntInclusive(10, 50)
         line.stroke = generateRandomColor()
         line.fill = generateRandomColor()

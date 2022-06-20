@@ -23,8 +23,8 @@ function getRandomImg() {
 }
 
 function getFilteredImages(val) {
+    console.log('getting filterd images')
    // TODO
-   console.log('getting filterd images')
 }
 
 // Recieve data
