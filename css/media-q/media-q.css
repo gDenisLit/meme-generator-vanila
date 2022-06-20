@@ -115,6 +115,10 @@
     .color {
         grid-area: 3 / span 1;
     }
+
+    .export {
+        font-size: 0.8rem
+    }
 }
 
 @media (min-width: 600px) {
@@ -220,4 +224,8 @@
         grid-area: 2 / span 1;
     }
 
+    .export {
+        font-size: 1.3rem
+    }
 }
+

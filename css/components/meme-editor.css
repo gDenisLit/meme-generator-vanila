@@ -80,7 +80,6 @@ input[type="color"] {
 .export {
     font-family: poppins-medium;
     text-align: center;
-    font-size: 1.3125rem;
     background-color: var(--clr13);
     color: var(--clr4);
 
