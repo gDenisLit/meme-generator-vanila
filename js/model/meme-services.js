@@ -44,7 +44,7 @@ function generateRandomMeme() {
         line.stroke = generateRandomColor()
         line.fill = generateRandomColor()
     })
-    gMeme = { img: randomImg, lines}
+    gMeme = { img: randomImg, lines }
     return gMeme
 }
 
@@ -55,7 +55,7 @@ function updateLinesProp(val, lineId, key) {
 }
 
 function deleteLine(lineId) {
-    const idx = gMeme.lines.findIndex((line, idx)=> idx === lineId)
+    const idx = gMeme.lines.findIndex((line, idx) => idx === lineId)
     gMeme.lines.splice(idx, 1)
 }
 
@@ -99,7 +99,7 @@ function _createNewLine() {
         txtSize: 50,
         align: 'center',
         stroke: '#000000',
-        fill: '#ffffff', 
+        fill: '#ffffff',
         font: 'Impact',
         isDrag: false,
     }

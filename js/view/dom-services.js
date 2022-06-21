@@ -1,16 +1,14 @@
 'use strict'
 
 function renderGallry(images) {
-    var strHtml = ''
-    images.map(image => { strHtml+=
-        `<img
-            class="gallery-item"
-            id="${image.id}"
-            src="${image.url}"
-            onclick="onImageSelect('${image.id}')"
-        >`
-    })
-    document.querySelector('.images-wrapper').innerHTML = strHtml
+    const strHtml = images.map(image => {
+        return `<img
+                    class="gallery-item"
+                    id="${image.id}"
+                    src="${image.url}"
+                    onclick="onImageSelect('${image.id}')"
+    >`})
+    document.querySelector('.images-wrapper').innerHTML = strHtml.join('')
 }
 
 function renderMemeEditor() {
